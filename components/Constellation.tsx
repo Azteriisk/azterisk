@@ -9,24 +9,24 @@ interface ConstellationProps {
   onSelectProject: (project: SubdomainProject) => void;
 }
 
-// Desktop coordinates (galaxy cluster layout)
+// Desktop coordinates (galaxy cluster layout comfortably within viewport bounds)
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 19, radius: 82, delay: 0 },
-  'unknown-frequencies': { x: 26, y: 38, radius: 94, delay: 1 },
-  'career-report': { x: 74, y: 36, radius: 94, delay: 2 },
-  'patent-flow': { x: 50, y: 56, radius: 92, delay: 3 },
-  'sales-flow': { x: 22, y: 76, radius: 88, delay: 4 },
-  'shared-canvas': { x: 78, y: 76, radius: 88, delay: 5 },
+  'makerspace': { x: 50, y: 15, radius: 76, delay: 0 },
+  'unknown-frequencies': { x: 25, y: 36, radius: 82, delay: 1 },
+  'career-report': { x: 75, y: 36, radius: 82, delay: 2 },
+  'patent-flow': { x: 50, y: 53, radius: 80, delay: 3 },
+  'sales-flow': { x: 24, y: 74, radius: 76, delay: 4 },
+  'shared-canvas': { x: 76, y: 74, radius: 76, delay: 5 },
 };
 
 // Mobile coordinates (vertical organic double-helix layout)
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 14, radius: 68, delay: 0 },
-  'unknown-frequencies': { x: 30, y: 29, radius: 72, delay: 1 },
-  'career-report': { x: 70, y: 44, radius: 72, delay: 2 },
-  'patent-flow': { x: 30, y: 59, radius: 70, delay: 3 },
-  'sales-flow': { x: 70, y: 74, radius: 68, delay: 4 },
-  'shared-canvas': { x: 50, y: 89, radius: 68, delay: 5 },
+  'makerspace': { x: 50, y: 12, radius: 62, delay: 0 },
+  'unknown-frequencies': { x: 30, y: 27, radius: 66, delay: 1 },
+  'career-report': { x: 70, y: 42, radius: 66, delay: 2 },
+  'patent-flow': { x: 30, y: 57, radius: 64, delay: 3 },
+  'sales-flow': { x: 70, y: 72, radius: 62, delay: 4 },
+  'shared-canvas': { x: 50, y: 87, radius: 62, delay: 5 },
 };
 
 // Constellation connecting lines between nodes
@@ -59,7 +59,7 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
 
   return (
     <div
-      className="relative w-full h-[85vh] min-h-[620px] md:min-h-[600px] flex items-center justify-center overflow-visible select-none"
+      className="relative w-full h-full max-h-[75vh] flex items-center justify-center overflow-visible select-none"
       onClick={() => setActiveProjectId(null)}
     >
       {/* Dynamic Backdrop Dimmer when any node is hovered or expanding */}
@@ -124,7 +124,7 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
         const coords = coordinatesMap[project.id] || {
           x: 50,
           y: 50,
-          radius: isMobile ? 68 : 85,
+          radius: isMobile ? 62 : 78,
           delay: 0,
         };
 
