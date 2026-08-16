@@ -53,15 +53,13 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           onClick={onClose}
         />
 
-        {/* Modal Window with shared layout transition ID */}
+        {/* Modal Window */}
         <motion.div
-          layoutId={`project-node-card-${project.id}`}
+          initial={{ opacity: 0, scale: 0.95, y: 16 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 16 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
           className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto z-10 glass-panel rounded-2xl border border-white/20 shadow-2xl p-5 sm:p-7 md:p-10 flex flex-col"
-          transition={{
-            type: 'spring',
-            stiffness: 280,
-            damping: 28,
-          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header Bar */}

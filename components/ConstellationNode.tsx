@@ -30,6 +30,10 @@ export function ConstellationNode({
   onToggleActive,
 }: ConstellationNodeProps) {
   const diameter = radius * 2;
+  // Hit zone radius encompasses the main circle, connector lines, satellite tech bubbles, and tooltips
+  const hitRadius = radius + 60;
+  const hitDiameter = hitRadius * 2;
+
   const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
@@ -44,10 +48,10 @@ export function ConstellationNode({
     if (leaveTimerRef.current) {
       clearTimeout(leaveTimerRef.current);
     }
-    // 200ms grace period so hovering between node & satellites never snaps closed
+    // 250ms grace period so moving mouse anywhere around satellites/connectors stays 100% active
     leaveTimerRef.current = setTimeout(() => {
       onToggleActive('');
-    }, 200);
+    }, 250);
   };
 
   const handleClick = (e: React.MouseEvent) => {
@@ -65,36 +69,37 @@ export function ConstellationNode({
   };
 
   return (
-    <motion.div
-      className="absolute flex items-center justify-center pointer-events-auto"
+    <div
+      className="absolute flex items-center justify-center pointer-events-auto select-none"
       style={{
         left: `${x}%`,
         top: `${y}%`,
-        marginLeft: -radius,
-        marginTop: -radius,
-        width: diameter,
-        height: diameter,
+        marginLeft: -hitRadius,
+        marginTop: -hitRadius,
+        width: hitDiameter,
+        height: hitDiameter,
         zIndex: isActive ? 40 : 10,
-      }}
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: isDimmed ? 0.2 : 1,
-        filter: isDimmed ? 'blur(1.5px)' : 'none',
-      }}
-      transition={{
-        opacity: { duration: 0.3 },
-        filter: { duration: 0.3 },
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Extended Hit Area to encompass all orbiting satellite badges */}
-      <div
-        className="absolute -inset-16 rounded-full pointer-events-auto"
-        style={{ zIndex: 0 }}
-      />
-
-      <div className="relative w-full h-full flex items-center justify-center pointer-events-auto">
+      {/* Node Container with fixed constant size and zero morphing */}
+      <motion.div
+        className="relative flex items-center justify-center"
+        style={{
+          width: diameter,
+          height: diameter,
+        }}
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: isDimmed ? 0.2 : 1,
+          filter: isDimmed ? 'blur(1.5px)' : 'none',
+        }}
+        transition={{
+          opacity: { duration: 0.25 },
+          filter: { duration: 0.25 },
+        }}
+      >
         {/* Satellites Orbit */}
         <SatelliteOrbit
           technologies={project.technologies}
@@ -106,22 +111,21 @@ export function ConstellationNode({
         {isActive && (
           <motion.div
             className="absolute rounded-full pointer-events-none"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.35, scale: 1.35 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.35 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             style={{
-              width: diameter,
-              height: diameter,
+              width: diameter * 1.35,
+              height: diameter * 1.35,
               background:
                 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(120,180,255,0.12) 50%, rgba(0,0,0,0) 70%)',
             }}
           />
         )}
 
-        {/* Hand-drawn Organic Circle Node with steady constant size */}
-        <motion.div
-          layoutId={`project-node-card-${project.id}`}
+        {/* Hand-drawn Organic Circle Node with rock-solid fixed dimensions */}
+        <div
           onClick={handleClick}
           onTouchEnd={handleTouch}
           className={`relative rounded-full flex flex-col items-center justify-center cursor-pointer select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
@@ -131,7 +135,6 @@ export function ConstellationNode({
             width: diameter,
             height: diameter,
           }}
-          whileTap={{ scale: 0.96 }}
         >
           {/* Organic Hand-Drawn Wobbly SVG Ring */}
           <svg
@@ -180,7 +183,7 @@ export function ConstellationNode({
                 pathLength: isActive ? 1 : 0,
                 opacity: isActive ? 1 : 0,
               }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
             />
 
             {/* Secondary Bright White Inner Ring on hover/click */}
@@ -196,7 +199,7 @@ export function ConstellationNode({
               animate={{
                 opacity: isActive ? 0.8 : 0,
               }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
             />
           </svg>
 
@@ -212,30 +215,15 @@ export function ConstellationNode({
 
             {/* Project Title */}
             <h3
-              className={`font-sans font-bold text-xs sm:text-sm md:text-base leading-tight tracking-wide text-white transition-all duration-300 ${
-                isActive ? 'glow-text' : ''
+              className={`font-sans font-bold text-xs sm:text-sm md:text-base leading-tight tracking-wide text-white transition-all duration-200 ${
+                isActive ? 'glow-text text-white' : 'text-slate-100'
               }`}
             >
               {project.name}
             </h3>
-
-            {/* Hint text on active */}
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{
-                opacity: isActive ? 1 : 0,
-                height: isActive ? 'auto' : 0,
-              }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden mt-1"
-            >
-              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-300 flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full">
-                <Sparkles size={9} /> Tap Showcase <ArrowRight size={9} />
-              </span>
-            </motion.div>
           </div>
-        </motion.div>
-      </div>
-    </motion.div>
+        </div>
+      </motion.div>
+    </div>
   );
 }
