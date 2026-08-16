@@ -335,7 +335,7 @@ export const SUBDOMAIN_PROJECTS: SubdomainProject[] = [
     id: 'makerspace',
     name: 'Makerspace Hub',
     subdomain: 'makerspace.azterisk.net',
-    liveUrl: 'https://makerspace-azteriisks-projects.vercel.app',
+    liveUrl: 'https://makerspace.azterisk.net',
     githubUrl: 'https://github.com/Azteriisk/makerspace',
     tagline: 'Digital Fabrication Lab & Rapid Prototyping Workshop System',
     shortDescription:
