@@ -82,6 +82,8 @@ export function ConstellationNode({
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onPointerEnter={handleMouseEnter}
+      onPointerLeave={handleMouseLeave}
     >
       {/* Node Container with fixed constant size and zero morphing */}
       <motion.div
@@ -203,10 +205,10 @@ export function ConstellationNode({
             />
           </svg>
 
-          {/* Node Interior Content */}
-          <div className="relative z-10 flex flex-col items-center text-center px-3 sm:px-4">
+          {/* Node Interior Content (pointer-events-none prevents child element hover bubbling quirks) */}
+          <div className="relative z-10 flex flex-col items-center text-center px-3 sm:px-4 pointer-events-none">
             {/* Subdomain Pill */}
-            <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
+            <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
               <span className="font-mono text-[10px] sm:text-[11px] font-medium tracking-wider text-slate-300">
                 {project.subdomain.split('.')[0]}.
