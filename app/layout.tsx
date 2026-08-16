@@ -4,7 +4,7 @@ import { SvgFilters } from '@/components/SvgFilters';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'azterisk.net // Portfolio Portal & Subdomain Launcher',
+  title: 'azterisk.net',
   description:
     'Deep-space interactive portfolio constellation and launcher for all hosted azterisk.net subdomains.',
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Azteriisk', url: 'https://github.com/Azteriisk' }],
   openGraph: {
-    title: 'azterisk.net // Portfolio Portal & Subdomain Launcher',
+    title: 'azterisk.net',
     description:
       'Interactive constellation hub displaying active subdomains and tech architectures across azterisk.net.',
     url: 'https://azterisk.net',
