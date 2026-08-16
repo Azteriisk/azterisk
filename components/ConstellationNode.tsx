@@ -189,10 +189,10 @@ export function ConstellationNode({
           {/* Node Interior Content */}
           <div className="relative z-10 flex flex-col items-center text-center px-3 sm:px-4">
             {/* Subdomain Pill */}
-            <div className="flex items-center gap-1 mb-1 sm:mb-1.5 px-2 py-0.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm max-w-[90%] overflow-hidden">
+            <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="font-mono text-[9px] sm:text-[10px] tracking-wider text-slate-300 truncate">
-                {project.subdomain}
+              <span className="font-mono text-[10px] sm:text-[11px] font-medium tracking-wider text-slate-300">
+                {project.subdomain.split('.')[0]}.
               </span>
             </div>
 
