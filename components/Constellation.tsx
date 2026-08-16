@@ -1,0 +1,129 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { SUBDOMAIN_PROJECTS, SubdomainProject } from '@/config/projects';
+import { ConstellationNode } from './ConstellationNode';
+import { motion } from 'framer-motion';
+
+interface ConstellationProps {
+  onSelectProject: (project: SubdomainProject) => void;
+}
+
+// Desktop coordinates (galaxy cluster layout)
+const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
+  'makerspace': { x: 50, y: 19, radius: 82, delay: 0 },
+  'unknown-frequencies': { x: 26, y: 38, radius: 94, delay: 1 },
+  'career-report': { x: 74, y: 36, radius: 94, delay: 2 },
+  'patent-flow': { x: 50, y: 56, radius: 92, delay: 3 },
+  'sales-flow': { x: 22, y: 76, radius: 88, delay: 4 },
+  'shared-canvas': { x: 78, y: 76, radius: 88, delay: 5 },
+};
+
+// Mobile coordinates (vertical organic double-helix layout)
+const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
+  'makerspace': { x: 50, y: 14, radius: 68, delay: 0 },
+  'unknown-frequencies': { x: 30, y: 29, radius: 72, delay: 1 },
+  'career-report': { x: 70, y: 44, radius: 72, delay: 2 },
+  'patent-flow': { x: 30, y: 59, radius: 70, delay: 3 },
+  'sales-flow': { x: 70, y: 74, radius: 68, delay: 4 },
+  'shared-canvas': { x: 50, y: 89, radius: 68, delay: 5 },
+};
+
+// Constellation connecting lines between nodes
+const CONSTELLATION_EDGES = [
+  ['makerspace', 'unknown-frequencies'],
+  ['makerspace', 'career-report'],
+  ['unknown-frequencies', 'patent-flow'],
+  ['career-report', 'patent-flow'],
+  ['patent-flow', 'sales-flow'],
+  ['patent-flow', 'shared-canvas'],
+  ['unknown-frequencies', 'sales-flow'],
+  ['career-report', 'shared-canvas'],
+];
+
+export function Constellation({ onSelectProject }: ConstellationProps) {
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const coordinatesMap = isMobile ? MOBILE_COORDINATES : DESKTOP_COORDINATES;
+
+  return (
+    <div
+      className="relative w-full h-[85vh] min-h-[620px] md:min-h-[600px] flex items-center justify-center overflow-visible select-none"
+      onClick={() => setActiveProjectId(null)}
+    >
+      {/* Constellation SVG Guide Lines */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {CONSTELLATION_EDGES.map(([fromId, toId], idx) => {
+          const from = coordinatesMap[fromId];
+          const to = coordinatesMap[toId];
+          if (!from || !to) return null;
+
+          const isConnectedToActive =
+            activeProjectId === fromId || activeProjectId === toId;
+
+          return (
+            <motion.line
+              key={`${fromId}-${toId}-${idx}`}
+              x1={`${from.x}%`}
+              y1={`${from.y}%`}
+              x2={`${to.x}%`}
+              y2={`${to.y}%`}
+              stroke={
+                isConnectedToActive
+                  ? 'rgba(255, 255, 255, 0.55)'
+                  : 'rgba(255, 255, 255, 0.09)'
+              }
+              strokeWidth={isConnectedToActive ? '1.8' : '1'}
+              strokeDasharray={isConnectedToActive ? '4 4' : '2 6'}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                stroke: isConnectedToActive
+                  ? 'rgba(255, 255, 255, 0.55)'
+                  : 'rgba(255, 255, 255, 0.09)',
+              }}
+              transition={{ duration: 0.3 }}
+            />
+          );
+        })}
+      </svg>
+
+      {/* Render Constellation Nodes */}
+      {SUBDOMAIN_PROJECTS.map((project) => {
+        const coords = coordinatesMap[project.id] || {
+          x: 50,
+          y: 50,
+          radius: isMobile ? 68 : 85,
+          delay: 0,
+        };
+
+        return (
+          <ConstellationNode
+            key={project.id}
+            project={project}
+            x={coords.x}
+            y={coords.y}
+            radius={coords.radius}
+            floatDelay={coords.delay}
+            onSelect={onSelectProject}
+            isActive={activeProjectId === project.id}
+            onToggleActive={(id) => setActiveProjectId(id || null)}
+          />
+        );
+      })}
+    </div>
+  );
+}
