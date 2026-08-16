@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     'makerspace',
     'developer',
   ],
+  icons: {
+    icon: '/favicon.svg',
+  },
   authors: [{ name: 'Azteriisk', url: 'https://github.com/Azteriisk' }],
   openGraph: {
     title: 'azterisk.net',
