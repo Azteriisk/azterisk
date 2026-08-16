@@ -37,7 +37,7 @@ export default function Home() {
           filter: isFocused ? 'blur(2px)' : 'none',
         }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 pt-16 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
+        className="relative z-10 pt-12 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
       >
         <motion.div
           initial={{ opacity: 0, y: -8 }}
@@ -70,8 +70,8 @@ export default function Home() {
         </motion.p>
       </motion.div>
 
-      {/* Main Interactive Stage Area (No scroll, perfectly fitted) */}
-      <div className="relative z-10 flex-1 flex items-center justify-center w-full px-2 sm:px-4 overflow-hidden">
+      {/* Main Interactive Stage Area (Overflow visible so satellites & glow never get cut off) */}
+      <div className="relative z-10 flex-1 flex items-center justify-center w-full px-2 sm:px-4 overflow-visible">
         <AnimatePresence mode="wait">
           {viewMode === 'constellation' ? (
             <motion.div

@@ -13,22 +13,22 @@ interface ConstellationProps {
 
 // Desktop coordinates (Unknown Frequencies in the center)
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 15, radius: 76, delay: 0 },
-  'patent-flow': { x: 25, y: 36, radius: 80, delay: 1 },
-  'career-report': { x: 75, y: 36, radius: 80, delay: 2 },
-  'unknown-frequencies': { x: 50, y: 53, radius: 80, delay: 3 },
-  'sales-flow': { x: 24, y: 74, radius: 76, delay: 4 },
-  'shared-canvas': { x: 76, y: 74, radius: 76, delay: 5 },
+  'makerspace': { x: 50, y: 19, radius: 76, delay: 0 },
+  'patent-flow': { x: 25, y: 39, radius: 80, delay: 1 },
+  'career-report': { x: 75, y: 39, radius: 80, delay: 2 },
+  'unknown-frequencies': { x: 50, y: 55, radius: 80, delay: 3 },
+  'sales-flow': { x: 24, y: 75, radius: 76, delay: 4 },
+  'shared-canvas': { x: 76, y: 75, radius: 76, delay: 5 },
 };
 
 // Mobile coordinates (Unknown Frequencies in the middle hub)
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 12, radius: 62, delay: 0 },
-  'patent-flow': { x: 30, y: 27, radius: 64, delay: 1 },
-  'career-report': { x: 70, y: 42, radius: 66, delay: 2 },
-  'unknown-frequencies': { x: 50, y: 57, radius: 66, delay: 3 },
-  'sales-flow': { x: 30, y: 72, radius: 62, delay: 4 },
-  'shared-canvas': { x: 70, y: 87, radius: 62, delay: 5 },
+  'makerspace': { x: 50, y: 14, radius: 62, delay: 0 },
+  'patent-flow': { x: 30, y: 29, radius: 64, delay: 1 },
+  'career-report': { x: 70, y: 44, radius: 66, delay: 2 },
+  'unknown-frequencies': { x: 50, y: 59, radius: 66, delay: 3 },
+  'sales-flow': { x: 30, y: 74, radius: 62, delay: 4 },
+  'shared-canvas': { x: 70, y: 88, radius: 62, delay: 5 },
 };
 
 // Constellation network edges connecting all nodes through the center hub
