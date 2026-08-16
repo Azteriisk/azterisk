@@ -11,37 +11,37 @@ interface ConstellationProps {
   onActiveProjectChange?: (id: string | null) => void;
 }
 
-// Desktop coordinates (galaxy cluster layout comfortably within viewport bounds)
+// Desktop coordinates (Unknown Frequencies in the center)
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
   'makerspace': { x: 50, y: 15, radius: 76, delay: 0 },
-  'unknown-frequencies': { x: 25, y: 36, radius: 80, delay: 1 },
+  'patent-flow': { x: 25, y: 36, radius: 80, delay: 1 },
   'career-report': { x: 75, y: 36, radius: 80, delay: 2 },
-  'patent-flow': { x: 50, y: 53, radius: 80, delay: 3 },
+  'unknown-frequencies': { x: 50, y: 53, radius: 80, delay: 3 },
   'sales-flow': { x: 24, y: 74, radius: 76, delay: 4 },
   'shared-canvas': { x: 76, y: 74, radius: 76, delay: 5 },
 };
 
-// Mobile coordinates (vertical organic double-helix layout)
+// Mobile coordinates (Unknown Frequencies in the middle hub)
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
   'makerspace': { x: 50, y: 12, radius: 62, delay: 0 },
-  'unknown-frequencies': { x: 30, y: 27, radius: 66, delay: 1 },
+  'patent-flow': { x: 30, y: 27, radius: 64, delay: 1 },
   'career-report': { x: 70, y: 42, radius: 66, delay: 2 },
-  'patent-flow': { x: 30, y: 57, radius: 64, delay: 3 },
-  'sales-flow': { x: 70, y: 72, radius: 62, delay: 4 },
-  'shared-canvas': { x: 50, y: 87, radius: 62, delay: 5 },
+  'unknown-frequencies': { x: 50, y: 57, radius: 66, delay: 3 },
+  'sales-flow': { x: 30, y: 72, radius: 62, delay: 4 },
+  'shared-canvas': { x: 70, y: 87, radius: 62, delay: 5 },
 };
 
-// Complete constellation network edges forming a clean geometric star graph
+// Constellation network edges connecting all nodes through the center hub
 const CONSTELLATION_EDGES = [
-  ['makerspace', 'unknown-frequencies'],
-  ['makerspace', 'career-report'],
   ['makerspace', 'patent-flow'],
-  ['unknown-frequencies', 'patent-flow'],
-  ['career-report', 'patent-flow'],
-  ['unknown-frequencies', 'sales-flow'],
-  ['career-report', 'shared-canvas'],
+  ['makerspace', 'career-report'],
+  ['makerspace', 'unknown-frequencies'],
+  ['patent-flow', 'unknown-frequencies'],
+  ['career-report', 'unknown-frequencies'],
   ['patent-flow', 'sales-flow'],
-  ['patent-flow', 'shared-canvas'],
+  ['career-report', 'shared-canvas'],
+  ['unknown-frequencies', 'sales-flow'],
+  ['unknown-frequencies', 'shared-canvas'],
   ['sales-flow', 'shared-canvas'],
 ];
 
@@ -88,7 +88,7 @@ export function Constellation({
         ease: 'easeInOut',
       }}
     >
-      {/* Constellation SVG Guide Lines intersecting directly at node coordinates */}
+      {/* Constellation SVG Guide Lines */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
         xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +132,7 @@ export function Constellation({
         })}
       </svg>
 
-      {/* Render Constellation Nodes directly at coordinate centers */}
+      {/* Render Constellation Nodes */}
       {SUBDOMAIN_PROJECTS.map((project) => {
         const coords = coordinatesMap[project.id] || {
           x: 50,
