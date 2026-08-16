@@ -96,18 +96,36 @@ export function ConstellationNode({
           />
         )}
 
-        {/* Hand-drawn Organic Circle Node centered on intersection */}
+        {/* Hand-drawn Organic Circle Node with gentle zero-gravity cosmic breathing wobble */}
         <motion.div
           layoutId={`project-node-card-${project.id}`}
           onClick={handleClick}
           onTouchEnd={handleTouch}
-          className={`relative rounded-full flex flex-col items-center justify-center cursor-pointer transition-all duration-300 select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
+          className={`relative rounded-full flex flex-col items-center justify-center cursor-pointer select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
             isActive ? 'glow-circle-active' : ''
           }`}
           style={{
             width: diameter,
             height: diameter,
           }}
+          animate={
+            isActive
+              ? { scale: 1.06, rotate: 0 }
+              : {
+                  scale: [1, 1.018, 0.985, 1],
+                  rotate: [0, 0.5, -0.5, 0],
+                }
+          }
+          transition={
+            isActive
+              ? { duration: 0.25 }
+              : {
+                  duration: 6 + (floatDelay % 3) * 1.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: floatDelay * 0.4,
+                }
+          }
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.95 }}
         >

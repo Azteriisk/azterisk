@@ -74,9 +74,19 @@ export function Constellation({
   const isAnyActive = activeProjectId !== null && activeProjectId !== '';
 
   return (
-    <div
+    <motion.div
       className="relative w-full h-full max-h-[75vh] flex items-center justify-center overflow-visible select-none"
       onClick={() => setActiveId(null)}
+      animate={{
+        x: [0, 7, -5, 4, 0],
+        y: [0, -6, 6, -4, 0],
+        rotate: [0, 0.35, -0.3, 0.15, 0],
+      }}
+      transition={{
+        duration: 16,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      }}
     >
       {/* Constellation SVG Guide Lines intersecting directly at node coordinates */}
       <svg
@@ -149,6 +159,6 @@ export function Constellation({
           />
         );
       })}
-    </div>
+    </motion.div>
   );
 }
