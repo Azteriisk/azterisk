@@ -68,8 +68,8 @@ export function Header({ viewMode, onToggleView }: HeaderProps) {
       <div className="flex items-center gap-3 pointer-events-auto">
         <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/15">
           <div className="relative flex items-center justify-center">
-            <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping absolute opacity-75" />
-            <span className="w-2 h-2 rounded-full bg-white" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping absolute opacity-75" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
           </div>
           <span className="font-mono font-bold tracking-wider text-sm text-white">
             azterisk.net
