@@ -11,15 +11,34 @@ import { Sparkles, Terminal } from 'lucide-react';
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<SubdomainProject | null>(null);
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'constellation' | 'list'>('constellation');
+
+  const isFocused = activeProjectId !== null && activeProjectId !== '';
 
   return (
     <main className="relative h-screen max-h-screen w-full flex flex-col justify-between overflow-hidden">
-      {/* Fixed Cosmic Header */}
-      <Header viewMode={viewMode} onToggleView={setViewMode} />
+      {/* Fixed Cosmic Header - Dims smoothly when any node is hovered */}
+      <motion.div
+        animate={{
+          opacity: isFocused ? 0.15 : 1,
+          filter: isFocused ? 'blur(1.5px)' : 'none',
+        }}
+        transition={{ duration: 0.3 }}
+        className="relative z-30 pointer-events-auto"
+      >
+        <Header viewMode={viewMode} onToggleView={setViewMode} />
+      </motion.div>
 
-      {/* Hero Title & Subtitle */}
-      <div className="relative z-10 pt-16 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0">
+      {/* Hero Title & Subtitle - Dims smoothly when any node is hovered */}
+      <motion.div
+        animate={{
+          opacity: isFocused ? 0.12 : 1,
+          filter: isFocused ? 'blur(2px)' : 'none',
+        }}
+        transition={{ duration: 0.3 }}
+        className="relative z-10 pt-16 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
+      >
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,7 +68,7 @@ export default function Home() {
         >
           Interactive constellation of live production subdomains & architectures
         </motion.p>
-      </div>
+      </motion.div>
 
       {/* Main Interactive Stage Area (No scroll, perfectly fitted) */}
       <div className="relative z-10 flex-1 flex items-center justify-center w-full px-2 sm:px-4 overflow-hidden">
@@ -63,7 +82,11 @@ export default function Home() {
               transition={{ duration: 0.35 }}
               className="w-full h-full flex items-center justify-center"
             >
-              <Constellation onSelectProject={setSelectedProject} />
+              <Constellation
+                onSelectProject={setSelectedProject}
+                activeProjectId={activeProjectId}
+                onActiveProjectChange={setActiveProjectId}
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -86,8 +109,14 @@ export default function Home() {
         onClose={() => setSelectedProject(null)}
       />
 
-      {/* Cosmic Bottom Navigation & Hint Bar */}
-      <footer className="relative z-20 py-2.5 px-6 flex items-center justify-between pointer-events-none text-[10px] font-mono text-slate-500 border-t border-white/5 bg-black/40 backdrop-blur-md shrink-0">
+      {/* Cosmic Bottom Navigation & Hint Bar - Dims smoothly when any node is hovered */}
+      <motion.footer
+        animate={{
+          opacity: isFocused ? 0.15 : 1,
+        }}
+        transition={{ duration: 0.3 }}
+        className="relative z-20 py-2.5 px-6 flex items-center justify-between pointer-events-none text-[10px] font-mono text-slate-500 border-t border-white/5 bg-black/40 backdrop-blur-md shrink-0"
+      >
         <div className="flex items-center gap-2 pointer-events-auto">
           <Terminal size={11} className="text-slate-400" />
           <span className="hidden sm:inline">ROOT DOMAIN:</span>
@@ -113,7 +142,7 @@ export default function Home() {
             © {new Date().getFullYear()} Azteriisk
           </a>
         </div>
-      </footer>
+      </motion.footer>
     </main>
   );
 }

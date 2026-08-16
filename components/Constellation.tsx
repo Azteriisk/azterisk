@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SUBDOMAIN_PROJECTS, SubdomainProject } from '@/config/projects';
 import { ConstellationNode } from './ConstellationNode';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface ConstellationProps {
   onSelectProject: (project: SubdomainProject) => void;
+  activeProjectId?: string | null;
+  onActiveProjectChange?: (id: string | null) => void;
 }
 
 // Desktop coordinates (galaxy cluster layout comfortably within viewport bounds)
@@ -29,7 +31,7 @@ const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number;
   'shared-canvas': { x: 50, y: 87, radius: 62, delay: 5 },
 };
 
-// Complete constellation network edges ensuring all nodes are vertices/intersections
+// Complete constellation network edges forming a clean geometric star graph
 const CONSTELLATION_EDGES = [
   ['makerspace', 'unknown-frequencies'],
   ['makerspace', 'career-report'],
@@ -43,9 +45,21 @@ const CONSTELLATION_EDGES = [
   ['sales-flow', 'shared-canvas'],
 ];
 
-export function Constellation({ onSelectProject }: ConstellationProps) {
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+export function Constellation({
+  onSelectProject,
+  activeProjectId: propActiveId,
+  onActiveProjectChange,
+}: ConstellationProps) {
+  const [internalActiveId, setInternalActiveId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  const activeProjectId = propActiveId !== undefined ? propActiveId : internalActiveId;
+  const setActiveId = (id: string | null) => {
+    setInternalActiveId(id);
+    if (onActiveProjectChange) {
+      onActiveProjectChange(id);
+    }
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -62,22 +76,9 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
   return (
     <div
       className="relative w-full h-full max-h-[75vh] flex items-center justify-center overflow-visible select-none"
-      onClick={() => setActiveProjectId(null)}
+      onClick={() => setActiveId(null)}
     >
-      {/* Dynamic Backdrop Dimmer when any node is hovered or expanding */}
-      <AnimatePresence>
-        {isAnyActive && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.55 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute -inset-40 bg-black/60 pointer-events-none z-0 backdrop-blur-[2px]"
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Constellation SVG Guide Lines intersecting at node centers */}
+      {/* Constellation SVG Guide Lines intersecting directly at node coordinates */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
         xmlns="http://www.w3.org/2000/svg"
@@ -99,18 +100,18 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
               y2={`${to.y}%`}
               stroke={
                 isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.75)'
+                  ? 'rgba(255, 255, 255, 0.65)'
                   : isAnyActive
                   ? 'rgba(255, 255, 255, 0.02)'
                   : 'rgba(255, 255, 255, 0.12)'
               }
-              strokeWidth={isConnectedToActive ? '2' : '1'}
-              strokeDasharray={isConnectedToActive ? 'none' : '3 6'}
+              strokeWidth={isConnectedToActive ? '1.8' : '1'}
+              strokeDasharray={isConnectedToActive ? '4 4' : '3 6'}
               initial={{ opacity: 0 }}
               animate={{
                 opacity: isAnyActive && !isConnectedToActive ? 0.15 : 1,
                 stroke: isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.75)'
+                  ? 'rgba(255, 255, 255, 0.65)'
                   : isAnyActive
                   ? 'rgba(255, 255, 255, 0.02)'
                   : 'rgba(255, 255, 255, 0.12)',
@@ -121,7 +122,7 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
         })}
       </svg>
 
-      {/* Render Constellation Nodes directly on intersections */}
+      {/* Render Constellation Nodes directly at coordinate centers */}
       {SUBDOMAIN_PROJECTS.map((project) => {
         const coords = coordinatesMap[project.id] || {
           x: 50,
@@ -144,7 +145,7 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
             onSelect={onSelectProject}
             isActive={isActive}
             isDimmed={isDimmed}
-            onToggleActive={(id) => setActiveProjectId(id || null)}
+            onToggleActive={(id) => setActiveId(id || null)}
           />
         );
       })}
