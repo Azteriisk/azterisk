@@ -121,7 +121,7 @@ export function Constellation({
         ease: 'easeInOut',
       }}
     >
-      {/* Constellation SVG Guide Lines */}
+      {/* Constellation SVG Guide Lines — trimmed so they stop at node circle edges */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
         xmlns="http://www.w3.org/2000/svg"
@@ -134,13 +134,39 @@ export function Constellation({
           const isConnectedToActive =
             activeProjectId === fromId || activeProjectId === toId;
 
+          // Calculate trimmed endpoints so lines stop at circle circumferences
+          // We need to work in % units converted to a common scale
+          // Use a 1000x1000 virtual canvas to compute directions
+          const scale = 1000;
+          const fx = (from.x / 100) * scale;
+          const fy = (from.y / 100) * scale;
+          const tx = (to.x / 100) * scale;
+          const ty = (to.y / 100) * scale;
+          const dx = tx - fx;
+          const dy = ty - fy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist === 0) return null;
+          const ux = dx / dist;
+          const uy = dy / dist;
+
+          // Trim by each node's radius (in % converted to virtual-canvas units)
+          // We use a ratio of node radius to viewport width (~1000 wide virtual)
+          // Approximate: container is roughly 1000 virtual wide and proportional height
+          const fromTrim = (from.radius / 100) * (scale * 0.55);
+          const toTrim = (to.radius / 100) * (scale * 0.55);
+
+          const x1 = fx + ux * fromTrim;
+          const y1 = fy + uy * fromTrim;
+          const x2 = tx - ux * toTrim;
+          const y2 = ty - uy * toTrim;
+
           return (
             <motion.line
               key={`${fromId}-${toId}-${idx}`}
-              x1={`${from.x}%`}
-              y1={`${from.y}%`}
-              x2={`${to.x}%`}
-              y2={`${to.y}%`}
+              x1={`${(x1 / scale) * 100}%`}
+              y1={`${(y1 / scale) * 100}%`}
+              x2={`${(x2 / scale) * 100}%`}
+              y2={`${(y2 / scale) * 100}%`}
               stroke={
                 isConnectedToActive
                   ? 'rgba(255, 255, 255, 0.65)'

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { SUBDOMAIN_PROJECTS } from '@/config/projects';
 import { TechIcon } from './TechIcon';
 import { GithubIcon } from './Icons';
@@ -8,10 +8,6 @@ import {
   Sparkles,
   LayoutGrid,
   Orbit,
-  Volume2,
-  VolumeX,
-  Layers,
-  ExternalLink,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -66,50 +62,6 @@ const PORTAL_TECHNOLOGIES = [
 ];
 
 export function Header({ viewMode, onToggleView }: HeaderProps) {
-  const [isAudioActive, setIsAudioActive] = useState(false);
-  const [audioCtx, setAudioCtx] = useState<AudioContext | null>(null);
-
-  // Toggle ambient harmonic cosmic drone using Web Audio API
-  const handleToggleAudio = () => {
-    if (!isAudioActive) {
-      try {
-        const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-        
-        // Gentle cosmic root oscillator
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const filter = ctx.createBiquadFilter();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(108, ctx.currentTime); // Deep A2
-
-        // Soft lowpass filter
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(280, ctx.currentTime);
-
-        // Soft volume envelope
-        gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.04, ctx.currentTime + 3);
-
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start();
-
-        setAudioCtx(ctx);
-        setIsAudioActive(true);
-      } catch {
-        // audio context init failed
-      }
-    } else {
-      if (audioCtx) {
-        audioCtx.close();
-        setAudioCtx(null);
-      }
-      setIsAudioActive(false);
-    }
-  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-4 md:px-8 py-4 flex items-center justify-between pointer-events-none">
@@ -202,19 +154,6 @@ export function Header({ viewMode, onToggleView }: HeaderProps) {
             <span className="hidden sm:inline">Directory</span>
           </button>
         </div>
-
-        {/* Ambient Sound Drone Synthesizer */}
-        <button
-          onClick={handleToggleAudio}
-          className={`p-2 rounded-full border transition-all cursor-pointer flex items-center justify-center ${
-            isAudioActive
-              ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.4)]'
-              : 'bg-white/5 border-white/15 text-slate-400 hover:text-white hover:bg-white/10'
-          }`}
-          title={isAudioActive ? 'Mute Deep Space Harmonic Sound' : 'Play Deep Space Harmonic Sound'}
-        >
-          {isAudioActive ? <Volume2 size={16} /> : <VolumeX size={16} />}
-        </button>
 
         {/* GitHub Source Link */}
         <a

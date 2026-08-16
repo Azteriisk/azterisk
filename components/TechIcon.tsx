@@ -163,6 +163,59 @@ export function TechIcon({
     case 'websockets':
       return <Radio size={size} className={className} color={iconColor} />;
 
+    case 'cpp':
+    case 'c++':
+      return (
+        <span
+          className={`font-black text-[10px] px-1 rounded flex items-center justify-center text-white font-mono ${className}`}
+          style={{ width: size, height: size, backgroundColor: iconColor }}
+        >
+          C++
+        </span>
+      );
+
+    case 'go':
+    case 'golang':
+      return (
+        <span
+          className={`font-black text-[10px] px-1 rounded flex items-center justify-center text-white font-mono ${className}`}
+          style={{ width: size, height: size, backgroundColor: iconColor }}
+        >
+          GO
+        </span>
+      );
+
+    case 'python':
+      return (
+        <span
+          className={`font-black text-[10px] px-1 rounded flex items-center justify-center text-white font-mono ${className}`}
+          style={{ width: size, height: size, backgroundColor: iconColor }}
+        >
+          PY
+        </span>
+      );
+
+    case 'odin':
+      return (
+        <span
+          className={`font-black text-[10px] px-1 rounded flex items-center justify-center text-white font-mono ${className}`}
+          style={{ width: size, height: size, backgroundColor: iconColor }}
+        >
+          OD
+        </span>
+      );
+
+    case 'vulkan':
+    case 'webgl':
+    case 'juce':
+    case 'unreal':
+    case 'ue5':
+    case 'slint':
+      return <Cpu size={size} className={className} color={iconColor} />;
+
+    case 'docker':
+      return <Boxes size={size} className={className} color={iconColor} />;
+
     case 'vercel':
       return (
         <svg viewBox="0 0 24 24" width={size} height={size} fill={iconColor} className={className}>

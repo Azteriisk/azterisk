@@ -181,7 +181,7 @@ export function ConstellationNode({
             <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
               <span className="font-mono text-[10px] sm:text-[11px] font-medium tracking-wider text-slate-300">
-                {project.subdomain.split('.')[0]}.
+                {(project.subdomain || project.id).split('.')[0]}.
               </span>
             </div>
 
