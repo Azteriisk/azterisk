@@ -163,6 +163,13 @@ export function TechIcon({
     case 'websockets':
       return <Radio size={size} className={className} color={iconColor} />;
 
+    case 'vercel':
+      return (
+        <svg viewBox="0 0 24 24" width={size} height={size} fill={iconColor} className={className}>
+          <path d="M12 2L24 22H0L12 2Z" />
+        </svg>
+      );
+
     default:
       return <Code2 size={size} className={className} color={iconColor} />;
   }
