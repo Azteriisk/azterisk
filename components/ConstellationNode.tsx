@@ -47,11 +47,14 @@ export function ConstellationNode({
 
   return (
     <motion.div
-      className="absolute"
+      className="absolute flex items-center justify-center pointer-events-auto"
       style={{
         left: `${x}%`,
         top: `${y}%`,
-        transform: 'translate(-50%, -50%)',
+        marginLeft: -radius,
+        marginTop: -radius,
+        width: diameter,
+        height: diameter,
         zIndex: isActive ? 40 : 10,
       }}
       initial={{ opacity: 0, scale: 0.6 }}
@@ -68,7 +71,7 @@ export function ConstellationNode({
       onMouseEnter={() => onToggleActive(project.id)}
       onMouseLeave={() => onToggleActive('')}
     >
-      <div className="relative flex items-center justify-center">
+      <div className="relative w-full h-full flex items-center justify-center">
         {/* Satellites Orbit */}
         <SatelliteOrbit
           technologies={project.technologies}
