@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { SUBDOMAIN_PROJECTS, SubdomainProject } from '@/config/projects';
 import { ConstellationNode } from './ConstellationNode';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ConstellationProps {
   onSelectProject: (project: SubdomainProject) => void;
@@ -55,12 +55,26 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
   }, []);
 
   const coordinatesMap = isMobile ? MOBILE_COORDINATES : DESKTOP_COORDINATES;
+  const isAnyActive = activeProjectId !== null && activeProjectId !== '';
 
   return (
     <div
       className="relative w-full h-[85vh] min-h-[620px] md:min-h-[600px] flex items-center justify-center overflow-visible select-none"
       onClick={() => setActiveProjectId(null)}
     >
+      {/* Dynamic Backdrop Dimmer when any node is hovered or expanding */}
+      <AnimatePresence>
+        {isAnyActive && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.55 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute -inset-40 bg-black/60 pointer-events-none z-0 backdrop-blur-[2px]"
+          />
+        )}
+      </AnimatePresence>
+
       {/* Constellation SVG Guide Lines */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
@@ -83,16 +97,20 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
               y2={`${to.y}%`}
               stroke={
                 isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.55)'
+                  ? 'rgba(255, 255, 255, 0.65)'
+                  : isAnyActive
+                  ? 'rgba(255, 255, 255, 0.02)'
                   : 'rgba(255, 255, 255, 0.09)'
               }
-              strokeWidth={isConnectedToActive ? '1.8' : '1'}
+              strokeWidth={isConnectedToActive ? '2' : '1'}
               strokeDasharray={isConnectedToActive ? '4 4' : '2 6'}
               initial={{ opacity: 0 }}
               animate={{
-                opacity: 1,
+                opacity: isAnyActive && !isConnectedToActive ? 0.15 : 1,
                 stroke: isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.55)'
+                  ? 'rgba(255, 255, 255, 0.65)'
+                  : isAnyActive
+                  ? 'rgba(255, 255, 255, 0.02)'
                   : 'rgba(255, 255, 255, 0.09)',
               }}
               transition={{ duration: 0.3 }}
@@ -110,6 +128,9 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
           delay: 0,
         };
 
+        const isActive = activeProjectId === project.id;
+        const isDimmed = isAnyActive && !isActive;
+
         return (
           <ConstellationNode
             key={project.id}
@@ -119,7 +140,8 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
             radius={coords.radius}
             floatDelay={coords.delay}
             onSelect={onSelectProject}
-            isActive={activeProjectId === project.id}
+            isActive={isActive}
+            isDimmed={isDimmed}
             onToggleActive={(id) => setActiveProjectId(id || null)}
           />
         );

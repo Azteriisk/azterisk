@@ -16,6 +16,15 @@
     overflow-x: hidden;
     user-select: none;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *, *::before, *::after {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *:focus, *:focus-visible {
+    outline: none !important;
   }
 }
 

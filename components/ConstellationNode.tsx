@@ -14,6 +14,7 @@ interface ConstellationNodeProps {
   floatDelay?: number;
   onSelect: (project: SubdomainProject) => void;
   isActive: boolean;
+  isDimmed?: boolean;
   onToggleActive: (id: string) => void;
 }
 
@@ -25,19 +26,18 @@ export function ConstellationNode({
   floatDelay = 0,
   onSelect,
   isActive,
+  isDimmed = false,
   onToggleActive,
 }: ConstellationNodeProps) {
   const diameter = radius * 2;
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // On desktop, clicking opens showcase directly
     onSelect(project);
   };
 
   const handleTouch = (e: React.TouchEvent) => {
     e.stopPropagation();
-    // On touch devices: first tap activates satellite orbit, second tap opens showcase
     if (!isActive) {
       onToggleActive(project.id);
     } else {
@@ -56,15 +56,17 @@ export function ConstellationNode({
       }}
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{
-        opacity: 1,
-        scale: 1,
+        opacity: isDimmed ? 0.2 : 1,
+        scale: isDimmed ? 0.92 : isActive ? 1.05 : 1,
+        filter: isDimmed ? 'blur(1.5px)' : 'none',
         // Idle gentle float harmonic physics when not active
-        y: isActive ? 0 : [0, -6, 0, 6, 0],
-        x: isActive ? 0 : [0, 5, 0, -5, 0],
+        y: isActive || isDimmed ? 0 : [0, -6, 0, 6, 0],
+        x: isActive || isDimmed ? 0 : [0, 5, 0, -5, 0],
       }}
       transition={{
-        opacity: { duration: 0.8, delay: floatDelay * 0.1 },
-        scale: { duration: 0.8, delay: floatDelay * 0.1 },
+        opacity: { duration: 0.35 },
+        scale: { duration: 0.35 },
+        filter: { duration: 0.35 },
         y: {
           repeat: Infinity,
           duration: 7 + floatDelay * 1.5,
@@ -93,7 +95,7 @@ export function ConstellationNode({
           animate={{
             width: isActive ? diameter * 1.35 : diameter * 1.08,
             height: isActive ? diameter * 1.35 : diameter * 1.08,
-            opacity: isActive ? 0.35 : 0.08,
+            opacity: isActive ? 0.35 : 0.05,
           }}
           transition={{ duration: 0.35 }}
           style={{
@@ -107,14 +109,14 @@ export function ConstellationNode({
           layoutId={`project-node-card-${project.id}`}
           onClick={handleClick}
           onTouchEnd={handleTouch}
-          className={`relative flex flex-col items-center justify-center cursor-pointer transition-all duration-300 select-none ${
+          className={`relative rounded-full flex flex-col items-center justify-center cursor-pointer transition-all duration-300 select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
             isActive ? 'glow-circle-active' : ''
           }`}
           style={{
             width: diameter,
             height: diameter,
           }}
-          whileHover={{ scale: 1.07 }}
+          whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.95 }}
         >
           {/* Organic Hand-Drawn Wobbly SVG Ring */}
@@ -164,7 +166,7 @@ export function ConstellationNode({
                 pathLength: isActive ? 1 : 0,
                 opacity: isActive ? 1 : 0,
               }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
             />
 
             {/* Secondary Bright White Inner Ring on hover/click */}
@@ -180,7 +182,7 @@ export function ConstellationNode({
               animate={{
                 opacity: isActive ? 0.8 : 0,
               }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
             />
           </svg>
 
