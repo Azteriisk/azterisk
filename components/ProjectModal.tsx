@@ -174,7 +174,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         className="w-8 h-8 rounded-lg flex items-center justify-center bg-black/50 border"
                         style={{ borderColor: tech.color || 'rgba(255,255,255,0.2)' }}
                       >
-                        <TechIcon techId={tech.id} size={16} />
+                        <TechIcon techId={tech.id} color={tech.color} size={16} />
                       </div>
                       <div>
                         <div className="text-xs font-semibold text-white group-hover:text-sky-300 transition-colors">

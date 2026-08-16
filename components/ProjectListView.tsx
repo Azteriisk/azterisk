@@ -55,7 +55,7 @@ export function ProjectListView({ onSelectProject }: ProjectListViewProps) {
                       key={tech.id}
                       className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-slate-300"
                     >
-                      <TechIcon techId={tech.id} size={13} />
+                      <TechIcon techId={tech.id} color={tech.color} size={13} />
                       <span>{tech.name}</span>
                     </div>
                   ))}

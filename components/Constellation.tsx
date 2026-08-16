@@ -12,8 +12,8 @@ interface ConstellationProps {
 // Desktop coordinates (galaxy cluster layout comfortably within viewport bounds)
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
   'makerspace': { x: 50, y: 15, radius: 76, delay: 0 },
-  'unknown-frequencies': { x: 25, y: 36, radius: 82, delay: 1 },
-  'career-report': { x: 75, y: 36, radius: 82, delay: 2 },
+  'unknown-frequencies': { x: 25, y: 36, radius: 80, delay: 1 },
+  'career-report': { x: 75, y: 36, radius: 80, delay: 2 },
   'patent-flow': { x: 50, y: 53, radius: 80, delay: 3 },
   'sales-flow': { x: 24, y: 74, radius: 76, delay: 4 },
   'shared-canvas': { x: 76, y: 74, radius: 76, delay: 5 },
@@ -29,16 +29,18 @@ const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number;
   'shared-canvas': { x: 50, y: 87, radius: 62, delay: 5 },
 };
 
-// Constellation connecting lines between nodes
+// Complete constellation network edges ensuring all nodes are vertices/intersections
 const CONSTELLATION_EDGES = [
   ['makerspace', 'unknown-frequencies'],
   ['makerspace', 'career-report'],
+  ['makerspace', 'patent-flow'],
   ['unknown-frequencies', 'patent-flow'],
   ['career-report', 'patent-flow'],
-  ['patent-flow', 'sales-flow'],
-  ['patent-flow', 'shared-canvas'],
   ['unknown-frequencies', 'sales-flow'],
   ['career-report', 'shared-canvas'],
+  ['patent-flow', 'sales-flow'],
+  ['patent-flow', 'shared-canvas'],
+  ['sales-flow', 'shared-canvas'],
 ];
 
 export function Constellation({ onSelectProject }: ConstellationProps) {
@@ -75,7 +77,7 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
         )}
       </AnimatePresence>
 
-      {/* Constellation SVG Guide Lines */}
+      {/* Constellation SVG Guide Lines intersecting at node centers */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
         xmlns="http://www.w3.org/2000/svg"
@@ -97,29 +99,29 @@ export function Constellation({ onSelectProject }: ConstellationProps) {
               y2={`${to.y}%`}
               stroke={
                 isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.65)'
+                  ? 'rgba(255, 255, 255, 0.75)'
                   : isAnyActive
                   ? 'rgba(255, 255, 255, 0.02)'
-                  : 'rgba(255, 255, 255, 0.09)'
+                  : 'rgba(255, 255, 255, 0.12)'
               }
               strokeWidth={isConnectedToActive ? '2' : '1'}
-              strokeDasharray={isConnectedToActive ? '4 4' : '2 6'}
+              strokeDasharray={isConnectedToActive ? 'none' : '3 6'}
               initial={{ opacity: 0 }}
               animate={{
                 opacity: isAnyActive && !isConnectedToActive ? 0.15 : 1,
                 stroke: isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.65)'
+                  ? 'rgba(255, 255, 255, 0.75)'
                   : isAnyActive
                   ? 'rgba(255, 255, 255, 0.02)'
-                  : 'rgba(255, 255, 255, 0.09)',
+                  : 'rgba(255, 255, 255, 0.12)',
               }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.25 }}
             />
           );
         })}
       </svg>
 
-      {/* Render Constellation Nodes */}
+      {/* Render Constellation Nodes directly on intersections */}
       {SUBDOMAIN_PROJECTS.map((project) => {
         const coords = coordinatesMap[project.id] || {
           x: 50,

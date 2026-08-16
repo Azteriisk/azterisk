@@ -22,7 +22,7 @@ export function ConstellationNode({
   project,
   x,
   y,
-  radius = 90,
+  radius = 80,
   floatDelay = 0,
   onSelect,
   isActive,
@@ -59,24 +59,11 @@ export function ConstellationNode({
         opacity: isDimmed ? 0.2 : 1,
         scale: isDimmed ? 0.92 : isActive ? 1.05 : 1,
         filter: isDimmed ? 'blur(1.5px)' : 'none',
-        // Idle gentle float harmonic physics when not active
-        y: isActive || isDimmed ? 0 : [0, -6, 0, 6, 0],
-        x: isActive || isDimmed ? 0 : [0, 5, 0, -5, 0],
       }}
       transition={{
-        opacity: { duration: 0.35 },
-        scale: { duration: 0.35 },
-        filter: { duration: 0.35 },
-        y: {
-          repeat: Infinity,
-          duration: 7 + floatDelay * 1.5,
-          ease: 'easeInOut',
-        },
-        x: {
-          repeat: Infinity,
-          duration: 9 + floatDelay * 1.2,
-          ease: 'easeInOut',
-        },
+        opacity: { duration: 0.3 },
+        scale: { duration: 0.3 },
+        filter: { duration: 0.3 },
       }}
       onMouseEnter={() => onToggleActive(project.id)}
       onMouseLeave={() => onToggleActive('')}
@@ -106,7 +93,7 @@ export function ConstellationNode({
           />
         )}
 
-        {/* Hand-drawn Organic Circle Node */}
+        {/* Hand-drawn Organic Circle Node centered on intersection */}
         <motion.div
           layoutId={`project-node-card-${project.id}`}
           onClick={handleClick}
