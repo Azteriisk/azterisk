@@ -89,20 +89,22 @@ export function ConstellationNode({
           parentRadius={radius}
         />
 
-        {/* Outer Cosmic Aura */}
-        <motion.div
-          className="absolute rounded-full pointer-events-none"
-          animate={{
-            width: isActive ? diameter * 1.35 : diameter * 1.08,
-            height: isActive ? diameter * 1.35 : diameter * 1.08,
-            opacity: isActive ? 0.35 : 0.05,
-          }}
-          transition={{ duration: 0.35 }}
-          style={{
-            background:
-              'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(120,180,255,0.12) 50%, rgba(0,0,0,0) 70%)',
-          }}
-        />
+        {/* Outer Cosmic Aura - only visible on active */}
+        {isActive && (
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 0.35, scale: 1.35 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              width: diameter,
+              height: diameter,
+              background:
+                'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(120,180,255,0.12) 50%, rgba(0,0,0,0) 70%)',
+            }}
+          />
+        )}
 
         {/* Hand-drawn Organic Circle Node */}
         <motion.div
@@ -124,12 +126,12 @@ export function ConstellationNode({
             viewBox="0 0 200 200"
             className="absolute inset-0 w-full h-full pointer-events-none cosmic-wobble"
           >
-            {/* Background fill */}
+            {/* Background fill - 100% transparent when idle so fog flows through */}
             <circle
               cx="100"
               cy="100"
               r="92"
-              fill={isActive ? 'rgba(14, 16, 32, 0.96)' : 'rgba(8, 9, 18, 0.75)'}
+              fill={isActive ? 'rgba(10, 12, 24, 0.7)' : 'transparent'}
             />
 
             {/* Permanent Subtle Grey Outer Circle */}
