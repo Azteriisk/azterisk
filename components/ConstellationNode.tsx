@@ -108,7 +108,7 @@ export function ConstellationNode({
           onClick={handleClick}
           onTouchEnd={handleTouch}
           className={`relative flex flex-col items-center justify-center cursor-pointer transition-all duration-300 select-none ${
-            isActive ? 'glow-circle-active' : 'glow-circle'
+            isActive ? 'glow-circle-active' : ''
           }`}
           style={{
             width: diameter,
@@ -127,30 +127,60 @@ export function ConstellationNode({
               cx="100"
               cy="100"
               r="92"
-              fill={isActive ? 'rgba(14, 16, 32, 0.96)' : 'rgba(6, 6, 14, 0.88)'}
+              fill={isActive ? 'rgba(14, 16, 32, 0.96)' : 'rgba(8, 9, 18, 0.75)'}
             />
 
-            {/* Hand-drawn Outer Stroke */}
+            {/* Permanent Subtle Grey Outer Circle */}
             <circle
               cx="100"
               cy="100"
               r="92"
               fill="none"
-              stroke="#ffffff"
-              strokeWidth={isActive ? '2.5' : '1.8'}
-              strokeDasharray={isActive ? 'none' : '400'}
-              strokeOpacity={isActive ? 1 : 0.8}
+              stroke="rgba(148, 163, 184, 0.35)"
+              strokeWidth="1.5"
             />
 
-            {/* Secondary Inner Organic Orbit Ring */}
+            {/* Permanent Subtle Grey Inner Circle */}
             <circle
               cx="100"
               cy="100"
               r="84"
               fill="none"
-              stroke="rgba(255, 255, 255, 0.25)"
+              stroke="rgba(148, 163, 184, 0.18)"
               strokeWidth="0.8"
-              strokeDasharray="4 6"
+              strokeDasharray="3 4"
+            />
+
+            {/* Bright White Outer Circle - ONLY appears on hover or click */}
+            <motion.circle
+              cx="100"
+              cy="100"
+              r="92"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="2.5"
+              initial={false}
+              animate={{
+                pathLength: isActive ? 1 : 0,
+                opacity: isActive ? 1 : 0,
+              }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            />
+
+            {/* Secondary Bright White Inner Ring on hover/click */}
+            <motion.circle
+              cx="100"
+              cy="100"
+              r="84"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="1"
+              strokeDasharray="5 4"
+              initial={false}
+              animate={{
+                opacity: isActive ? 0.8 : 0,
+              }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
             />
           </svg>
 
