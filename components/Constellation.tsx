@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { SUBDOMAIN_PROJECTS, SubdomainProject } from '@/config/projects';
 import { ConstellationNode } from './ConstellationNode';
 import { motion } from 'framer-motion';
@@ -52,14 +52,47 @@ export function Constellation({
 }: ConstellationProps) {
   const [internalActiveId, setInternalActiveId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeProjectId = propActiveId !== undefined ? propActiveId : internalActiveId;
-  const setActiveId = (id: string | null) => {
-    setInternalActiveId(id);
-    if (onActiveProjectChange) {
-      onActiveProjectChange(id);
-    }
-  };
+
+  const setActiveId = useCallback(
+    (id: string | null) => {
+      setInternalActiveId(id);
+      if (onActiveProjectChange) {
+        onActiveProjectChange(id);
+      }
+    },
+    [onActiveProjectChange]
+  );
+
+  // Centralized hover handler - instantly cancels any pending close timer
+  const handleNodeHover = useCallback(
+    (id: string) => {
+      if (leaveTimerRef.current) {
+        clearTimeout(leaveTimerRef.current);
+        leaveTimerRef.current = null;
+      }
+      setActiveId(id);
+    },
+    [setActiveId]
+  );
+
+  // Centralized leave handler - sets a grace period ONLY for this specific node
+  const handleNodeLeave = useCallback(
+    (id: string) => {
+      if (leaveTimerRef.current) {
+        clearTimeout(leaveTimerRef.current);
+      }
+      leaveTimerRef.current = setTimeout(() => {
+        // Only clear if the active node is STILL the node that was left
+        if (activeProjectId === id) {
+          setActiveId(null);
+        }
+      }, 120);
+    },
+    [activeProjectId, setActiveId]
+  );
 
   useEffect(() => {
     const checkMobile = () => {
@@ -155,7 +188,8 @@ export function Constellation({
             onSelect={onSelectProject}
             isActive={isActive}
             isDimmed={isDimmed}
-            onToggleActive={(id) => setActiveId(id || null)}
+            onHover={handleNodeHover}
+            onLeave={handleNodeLeave}
           />
         );
       })}

@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { SubdomainProject } from '@/config/projects';
 import { SatelliteOrbit } from './SatelliteOrbit';
-import { Sparkles, ArrowRight } from 'lucide-react';
 
 interface ConstellationNodeProps {
   project: SubdomainProject;
@@ -15,7 +14,8 @@ interface ConstellationNodeProps {
   onSelect: (project: SubdomainProject) => void;
   isActive: boolean;
   isDimmed?: boolean;
-  onToggleActive: (id: string) => void;
+  onHover: (id: string) => void;
+  onLeave: (id: string) => void;
 }
 
 export function ConstellationNode({
@@ -27,32 +27,10 @@ export function ConstellationNode({
   onSelect,
   isActive,
   isDimmed = false,
-  onToggleActive,
+  onHover,
+  onLeave,
 }: ConstellationNodeProps) {
   const diameter = radius * 2;
-  // Hit zone radius encompasses the main circle, connector lines, satellite tech bubbles, and tooltips
-  const hitRadius = radius + 60;
-  const hitDiameter = hitRadius * 2;
-
-  const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleMouseEnter = () => {
-    if (leaveTimerRef.current) {
-      clearTimeout(leaveTimerRef.current);
-      leaveTimerRef.current = null;
-    }
-    onToggleActive(project.id);
-  };
-
-  const handleMouseLeave = () => {
-    if (leaveTimerRef.current) {
-      clearTimeout(leaveTimerRef.current);
-    }
-    // 250ms grace period so moving mouse anywhere around satellites/connectors stays 100% active
-    leaveTimerRef.current = setTimeout(() => {
-      onToggleActive('');
-    }, 250);
-  };
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -62,7 +40,7 @@ export function ConstellationNode({
   const handleTouch = (e: React.TouchEvent) => {
     e.stopPropagation();
     if (!isActive) {
-      onToggleActive(project.id);
+      onHover(project.id);
     } else {
       onSelect(project);
     }
@@ -74,32 +52,26 @@ export function ConstellationNode({
       style={{
         left: `${x}%`,
         top: `${y}%`,
-        marginLeft: -hitRadius,
-        marginTop: -hitRadius,
-        width: hitDiameter,
-        height: hitDiameter,
+        marginLeft: -radius,
+        marginTop: -radius,
+        width: diameter,
+        height: diameter,
         zIndex: isActive ? 40 : 10,
       }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onPointerEnter={handleMouseEnter}
-      onPointerLeave={handleMouseLeave}
+      onMouseEnter={() => onHover(project.id)}
+      onMouseLeave={() => onLeave(project.id)}
     >
       {/* Node Container with fixed constant size and zero morphing */}
       <motion.div
-        className="relative flex items-center justify-center"
-        style={{
-          width: diameter,
-          height: diameter,
-        }}
+        className="relative w-full h-full flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{
           opacity: isDimmed ? 0.2 : 1,
           filter: isDimmed ? 'blur(1.5px)' : 'none',
         }}
         transition={{
-          opacity: { duration: 0.25 },
-          filter: { duration: 0.25 },
+          opacity: { duration: 0.2 },
+          filter: { duration: 0.2 },
         }}
       >
         {/* Satellites Orbit */}
@@ -107,6 +79,8 @@ export function ConstellationNode({
           technologies={project.technologies}
           isExpanded={isActive}
           parentRadius={radius}
+          onHover={() => onHover(project.id)}
+          onLeave={() => onLeave(project.id)}
         />
 
         {/* Outer Cosmic Aura - only visible on active */}
@@ -126,24 +100,20 @@ export function ConstellationNode({
           />
         )}
 
-        {/* Hand-drawn Organic Circle Node with rock-solid fixed dimensions */}
+        {/* Hand-drawn Organic Circle Node with steady constant size */}
         <div
           onClick={handleClick}
           onTouchEnd={handleTouch}
-          className={`relative rounded-full flex flex-col items-center justify-center cursor-pointer select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
+          className={`relative w-full h-full rounded-full flex flex-col items-center justify-center cursor-pointer select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
             isActive ? 'glow-circle-active' : ''
           }`}
-          style={{
-            width: diameter,
-            height: diameter,
-          }}
         >
           {/* Organic Hand-Drawn Wobbly SVG Ring */}
           <svg
             viewBox="0 0 200 200"
             className="absolute inset-0 w-full h-full pointer-events-none cosmic-wobble"
           >
-            {/* Background fill - 100% transparent when idle so fog flows through */}
+            {/* Background fill - transparent when idle */}
             <circle
               cx="100"
               cy="100"
@@ -185,7 +155,7 @@ export function ConstellationNode({
                 pathLength: isActive ? 1 : 0,
                 opacity: isActive ? 1 : 0,
               }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
             />
 
             {/* Secondary Bright White Inner Ring on hover/click */}
@@ -201,11 +171,11 @@ export function ConstellationNode({
               animate={{
                 opacity: isActive ? 0.8 : 0,
               }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
             />
           </svg>
 
-          {/* Node Interior Content (pointer-events-none prevents child element hover bubbling quirks) */}
+          {/* Node Interior Content (pointer-events-none ensures unified cursor hit) */}
           <div className="relative z-10 flex flex-col items-center text-center px-3 sm:px-4 pointer-events-none">
             {/* Subdomain Pill */}
             <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20">

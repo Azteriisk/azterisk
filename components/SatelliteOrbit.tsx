@@ -10,12 +10,16 @@ interface SatelliteOrbitProps {
   technologies: Technology[];
   isExpanded: boolean;
   parentRadius: number;
+  onHover?: () => void;
+  onLeave?: () => void;
 }
 
 export function SatelliteOrbit({
   technologies,
   isExpanded,
   parentRadius,
+  onHover,
+  onLeave,
 }: SatelliteOrbitProps) {
   if (!isExpanded) return null;
 
@@ -63,7 +67,7 @@ export function SatelliteOrbit({
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 0.95 }}
                 exit={{ pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.22, ease: 'easeOut', delay: index * 0.02 }}
+                transition={{ duration: 0.2, ease: 'easeOut', delay: index * 0.02 }}
               />
             </svg>
 
@@ -88,6 +92,8 @@ export function SatelliteOrbit({
                 height: bubbleRadius * 2,
                 filter: 'none',
               }}
+              onMouseEnter={onHover}
+              onMouseLeave={onLeave}
               onClick={(e) => {
                 e.stopPropagation();
                 window.open(tech.websiteUrl, '_blank', 'noopener,noreferrer');
