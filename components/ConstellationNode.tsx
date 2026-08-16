@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { SubdomainProject } from '@/config/projects';
 import { SatelliteOrbit } from './SatelliteOrbit';
@@ -30,6 +30,25 @@ export function ConstellationNode({
   onToggleActive,
 }: ConstellationNodeProps) {
   const diameter = radius * 2;
+  const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (leaveTimerRef.current) {
+      clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = null;
+    }
+    onToggleActive(project.id);
+  };
+
+  const handleMouseLeave = () => {
+    if (leaveTimerRef.current) {
+      clearTimeout(leaveTimerRef.current);
+    }
+    // 200ms grace period so hovering between node & satellites never snaps closed
+    leaveTimerRef.current = setTimeout(() => {
+      onToggleActive('');
+    }, 200);
+  };
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -57,21 +76,25 @@ export function ConstellationNode({
         height: diameter,
         zIndex: isActive ? 40 : 10,
       }}
-      initial={{ opacity: 0, scale: 0.6 }}
+      initial={{ opacity: 0 }}
       animate={{
         opacity: isDimmed ? 0.2 : 1,
-        scale: isDimmed ? 0.92 : isActive ? 1.05 : 1,
         filter: isDimmed ? 'blur(1.5px)' : 'none',
       }}
       transition={{
         opacity: { duration: 0.3 },
-        scale: { duration: 0.3 },
         filter: { duration: 0.3 },
       }}
-      onMouseEnter={() => onToggleActive(project.id)}
-      onMouseLeave={() => onToggleActive('')}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className="relative w-full h-full flex items-center justify-center">
+      {/* Extended Hit Area to encompass all orbiting satellite badges */}
+      <div
+        className="absolute -inset-16 rounded-full pointer-events-auto"
+        style={{ zIndex: 0 }}
+      />
+
+      <div className="relative w-full h-full flex items-center justify-center pointer-events-auto">
         {/* Satellites Orbit */}
         <SatelliteOrbit
           technologies={project.technologies}
@@ -96,7 +119,7 @@ export function ConstellationNode({
           />
         )}
 
-        {/* Hand-drawn Organic Circle Node with gentle zero-gravity cosmic breathing wobble */}
+        {/* Hand-drawn Organic Circle Node with steady constant size */}
         <motion.div
           layoutId={`project-node-card-${project.id}`}
           onClick={handleClick}
@@ -108,26 +131,7 @@ export function ConstellationNode({
             width: diameter,
             height: diameter,
           }}
-          animate={
-            isActive
-              ? { scale: 1.06, rotate: 0 }
-              : {
-                  scale: [1, 1.018, 0.985, 1],
-                  rotate: [0, 0.5, -0.5, 0],
-                }
-          }
-          transition={
-            isActive
-              ? { duration: 0.25 }
-              : {
-                  duration: 6 + (floatDelay % 3) * 1.5,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: floatDelay * 0.4,
-                }
-          }
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: 0.96 }}
         >
           {/* Organic Hand-Drawn Wobbly SVG Ring */}
           <svg
@@ -209,7 +213,7 @@ export function ConstellationNode({
             {/* Project Title */}
             <h3
               className={`font-sans font-bold text-xs sm:text-sm md:text-base leading-tight tracking-wide text-white transition-all duration-300 ${
-                isActive ? 'glow-text scale-105' : ''
+                isActive ? 'glow-text' : ''
               }`}
             >
               {project.name}
