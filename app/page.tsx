@@ -37,7 +37,7 @@ export default function Home() {
           filter: isFocused ? 'blur(2px)' : 'none',
         }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 pt-3 sm:pt-6 md:pt-10 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
+        className="relative z-10 pt-16 sm:pt-20 md:pt-14 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
       >
         <motion.div
           initial={{ opacity: 0, y: -8 }}

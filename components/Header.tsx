@@ -67,15 +67,15 @@ export function Header({ viewMode, onToggleView }: HeaderProps) {
     <header className="fixed top-0 left-0 right-0 z-40 px-4 md:px-8 py-4 flex items-center justify-between pointer-events-none">
       {/* Brand Identity & Tech Stack Hover Card */}
       <div className="relative group/portal pointer-events-auto">
-        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/15 cursor-pointer hover:bg-white/10 hover:border-white/30 transition-all">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/15 cursor-pointer hover:bg-white/10 hover:border-white/30 transition-all">
           <div className="relative flex items-center justify-center">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping absolute opacity-75" />
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-400 animate-ping absolute opacity-75" />
+            <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
           </div>
-          <span className="font-mono font-bold tracking-wider text-sm text-white">
+          <span className="font-mono font-bold tracking-wider text-xs sm:text-sm text-white">
             azterisk.net
           </span>
-          <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/10 text-slate-300">
+          <span className="hidden sm:inline-flex text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/10 text-slate-300">
             {SUBDOMAIN_PROJECTS.length} nodes
           </span>
         </div>
