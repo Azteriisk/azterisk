@@ -11,28 +11,28 @@ interface ConstellationProps {
   onActiveProjectChange?: (id: string | null) => void;
 }
 
-// Desktop coordinates
+// Desktop coordinates (wide breathing space between central spine nodes)
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 15, radius: 76, delay: 0 },
-  'patent-flow': { x: 22, y: 36, radius: 78, delay: 1 },
-  'terminal-emulator': { x: 50, y: 39, radius: 82, delay: 2 },
-  'career-report': { x: 78, y: 36, radius: 78, delay: 3 },
-  'unknown-frequencies': { x: 50, y: 62, radius: 82, delay: 4 },
-  'sales-flow': { x: 22, y: 64, radius: 78, delay: 5 },
-  'shared-canvas': { x: 78, y: 64, radius: 78, delay: 6 },
-  'quickswitch-ui': { x: 50, y: 86, radius: 76, delay: 7 },
+  'makerspace': { x: 50, y: 11, radius: 72, delay: 0 },
+  'patent-flow': { x: 19, y: 34, radius: 76, delay: 1 },
+  'terminal-emulator': { x: 50, y: 34, radius: 78, delay: 2 },
+  'career-report': { x: 81, y: 34, radius: 76, delay: 3 },
+  'unknown-frequencies': { x: 50, y: 66, radius: 78, delay: 4 },
+  'sales-flow': { x: 19, y: 66, radius: 76, delay: 5 },
+  'shared-canvas': { x: 81, y: 66, radius: 76, delay: 6 },
+  'quickswitch-ui': { x: 50, y: 89, radius: 72, delay: 7 },
 };
 
-// Mobile coordinates
+// Mobile coordinates (1-2-2-2-1 structure with 56% lateral and 26% vertical separation)
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 8, radius: 46, delay: 0 },
-  'patent-flow': { x: 23, y: 21, radius: 48, delay: 1 },
-  'career-report': { x: 77, y: 21, radius: 48, delay: 2 },
-  'terminal-emulator': { x: 50, y: 36, radius: 50, delay: 3 },
-  'unknown-frequencies': { x: 50, y: 51, radius: 50, delay: 4 },
-  'sales-flow': { x: 23, y: 66, radius: 48, delay: 5 },
-  'shared-canvas': { x: 77, y: 66, radius: 48, delay: 6 },
-  'quickswitch-ui': { x: 50, y: 82, radius: 46, delay: 7 },
+  'makerspace': { x: 50, y: 7, radius: 42, delay: 0 },
+  'patent-flow': { x: 22, y: 20, radius: 44, delay: 1 },
+  'career-report': { x: 78, y: 20, radius: 44, delay: 2 },
+  'terminal-emulator': { x: 22, y: 46, radius: 46, delay: 3 },
+  'unknown-frequencies': { x: 78, y: 46, radius: 46, delay: 4 },
+  'sales-flow': { x: 22, y: 72, radius: 44, delay: 5 },
+  'shared-canvas': { x: 78, y: 72, radius: 44, delay: 6 },
+  'quickswitch-ui': { x: 50, y: 85, radius: 42, delay: 7 },
 };
 
 // Constellation network edges
@@ -41,27 +41,27 @@ const CONSTELLATION_EDGES = [
   ['makerspace', 'patent-flow'],
   ['makerspace', 'career-report'],
   ['makerspace', 'terminal-emulator'],
+  ['makerspace', 'unknown-frequencies'],
 
   // Upper diamond / lateral links
+  ['patent-flow', 'career-report'],
   ['patent-flow', 'terminal-emulator'],
-  ['career-report', 'terminal-emulator'],
-  ['patent-flow', 'unknown-frequencies'],
   ['career-report', 'unknown-frequencies'],
-  ['patent-flow', 'sales-flow'],
-  ['career-report', 'shared-canvas'],
+  ['patent-flow', 'unknown-frequencies'],
+  ['career-report', 'terminal-emulator'],
 
-  // Center vertical spine
+  // Center vertical and horizontal bridges
   ['terminal-emulator', 'unknown-frequencies'],
+  ['terminal-emulator', 'sales-flow'],
+  ['unknown-frequencies', 'shared-canvas'],
+  ['terminal-emulator', 'shared-canvas'],
+  ['unknown-frequencies', 'sales-flow'],
 
   // Lower diamond / lateral links
-  ['sales-flow', 'terminal-emulator'],
-  ['shared-canvas', 'terminal-emulator'],
-  ['sales-flow', 'unknown-frequencies'],
-  ['shared-canvas', 'unknown-frequencies'],
+  ['sales-flow', 'shared-canvas'],
   ['sales-flow', 'quickswitch-ui'],
   ['shared-canvas', 'quickswitch-ui'],
-
-  // Bottom tier
+  ['terminal-emulator', 'quickswitch-ui'],
   ['unknown-frequencies', 'quickswitch-ui'],
 ];
 
