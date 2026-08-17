@@ -46,6 +46,8 @@ All primary web applications are active production nodes deployed as dedicated s
 | **PatentFlow** | [patentflow.azterisk.net](https://patentflow.azterisk.net) | React, Vite, USPTO Open Data, Apache Solr | Interactive patent citation network graph and prior art whitespace discovery engine. |
 | **Shared Canvas** | [canvas.azterisk.net](https://canvas.azterisk.net) | TanStack Start, SpacetimeDB, Rust, WebSockets | Multiplayer infinite collaborative pixel canvas with sub-10ms binary WebSocket synchronization. |
 | **Makerspace Hub** | [makerspace.azterisk.net](https://makerspace.azterisk.net) | Next.js, Supabase, Clerk Auth, Tailwind CSS | Digital fabrication lab scheduling, 3D printer queues, and safety certification management system. |
+| **Terminal Portfolio** | [terminal.azterisk.net](https://terminal.azterisk.net) | Next.js 16, TypeScript, Tailwind CSS | Interactive retro UNIX CLI emulator with simulated filesystem, commands, and theme engine. |
+| **Quickswitch UI** | [quickswitch.azterisk.net](https://quickswitch.azterisk.net) | Next.js 15, TypeScript, WebGL Particles | Real-time DOM and theme switching engine with GPU WebGL particle canvas. |
 
 ---
 
@@ -61,8 +63,6 @@ The directory also indexes offline systems, native desktop applications, compile
 * **[Stage](https://github.com/Azteriisk/stage)** — Browser-based live-coding performance environment linking Strudel music runtime to GLSL shaders.
 * **[SSLB](https://github.com/Azteriisk/sslb)** — Turing-complete shader language transpiler and interactive 3D runner in Rust.
 * **[CS-330 Portfolio](https://github.com/Azteriisk/CS-330-Portfolio)** — Comprehensive OpenGL 3D computer graphics coursework portfolio in C++ / GLFW.
-* **[Quickswitch UI](https://github.com/Azteriisk/quickswitch-ui)** — Next.js template switching engine with GPU WebGL particle canvas.
-* **[Terminal Portfolio](https://github.com/Azteriisk/terminal-emulator)** — Retro UNIX terminal portfolio with simulated virtual filesystem.
 * **[Netflix Visualizer](https://github.com/Azteriisk/Netflix-Visualizer)** — Canvas particle simulation clustering global streaming trends.
 * **[Free-Bot](https://github.com/Azteriisk/free-bot)** — Automated Discord bot tracking limited-time free game promotions.
 * **[MeshNet](https://github.com/Azteriisk/MeshNet)** — GPU-accelerated 3D browser mesh rendering engine in WebGL.

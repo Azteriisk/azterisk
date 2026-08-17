@@ -496,7 +496,8 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
   {
     id: 'quickswitch-ui',
     name: 'Quickswitch UI',
-    liveUrl: 'https://github.com/Azteriisk/quickswitch-ui',
+    subdomain: 'quickswitch.azterisk.net',
+    liveUrl: 'https://quickswitch.azterisk.net',
     githubUrl: 'https://github.com/Azteriisk/quickswitch-ui',
     tagline: 'Live Next.js UI Template Switching Engine & WebGL Particles',
     shortDescription:
@@ -504,9 +505,9 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
     fullWriteup:
       'Quickswitch UI demonstrates real-time DOM restructuring and palette transitions across completely distinct UX design languages without page reloads, accompanied by an interactive GPU particle canvas.',
     status: 'active',
-    statusLabel: 'Next.js / WebGL',
-    projectType: 'web',
-    isSubdomain: false,
+    statusLabel: 'Live Subdomain',
+    projectType: 'subdomain',
+    isSubdomain: true,
     technologies: [
       { id: 'nextjs', name: 'Next.js', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
       { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
@@ -516,7 +517,8 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
   {
     id: 'terminal-emulator',
     name: 'Terminal Portfolio',
-    liveUrl: 'https://github.com/Azteriisk/terminal-emulator',
+    subdomain: 'terminal.azterisk.net',
+    liveUrl: 'https://terminal.azterisk.net',
     githubUrl: 'https://github.com/Azteriisk/terminal-emulator',
     tagline: 'Interactive Next.js Retro CLI with Virtual Filesystem',
     shortDescription:
@@ -524,9 +526,9 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
     fullWriteup:
       'An interactive retro terminal emulator built with Next.js and TypeScript. Includes a simulated virtual filesystem (`cat`, `ls`, `grep`, `cd`), custom terminal color themes, command history, and instant client-side execution.',
     status: 'active',
-    statusLabel: 'CLI Web Emulator',
-    projectType: 'web',
-    isSubdomain: false,
+    statusLabel: 'Live Subdomain',
+    projectType: 'subdomain',
+    isSubdomain: true,
     technologies: [
       { id: 'nextjs', name: 'Next.js', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
       { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
