@@ -16,21 +16,21 @@
 ### 1. Interactive Orbital Constellation
 The root gateway features a real-time stardust particle void, hand-drawn organic SVG constellation nodes with continuous weightless floating physics, and pixel-calibrated dynamic boundary connection lines.
 
-![azterisk Constellation Gateway](public/screenshots/azterisk-constellation.png)
+![azterisk Constellation Gateway](public/screenshots/constellation-overview.png)
 
 ---
 
 ### 2. Orbiting Technology Stack Satellites & Modal Showcase
 Hovering or tapping any constellation node expands its surrounding satellite bubbles—displaying the exact technology stack with category tags. Clicking the node triggers a smooth full-screen modal showcasing architecture details, screenshots, and live launch links.
 
-![Project Modal Showcase](public/screenshots/azterisk-modal.png)
+![Project Modal Showcase](public/screenshots/modal-overview.png)
 
 ---
 
 ### 3. Dual-Mode Filterable Project Directory
 Toggle into **Directory Mode** for a high-density, searchable portfolio list featuring real-time stack filtering (Live Subdomains, Systems & Sim, Desktop & VST, CLI & Automation, Games & 3D).
 
-![Project Directory](public/screenshots/azterisk-directory.png)
+![Project Directory](public/screenshots/directory-overview.png)
 
 ---
 
