@@ -25,32 +25,43 @@ const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number
 
 // Mobile coordinates
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 9, radius: 58, delay: 0 },
-  'patent-flow': { x: 26, y: 21, radius: 60, delay: 1 },
-  'career-report': { x: 74, y: 32, radius: 60, delay: 2 },
-  'terminal-emulator': { x: 26, y: 44, radius: 62, delay: 3 },
-  'unknown-frequencies': { x: 74, y: 56, radius: 62, delay: 4 },
-  'sales-flow': { x: 26, y: 68, radius: 60, delay: 5 },
-  'shared-canvas': { x: 74, y: 80, radius: 60, delay: 6 },
-  'quickswitch-ui': { x: 50, y: 92, radius: 58, delay: 7 },
+  'makerspace': { x: 50, y: 8, radius: 46, delay: 0 },
+  'patent-flow': { x: 23, y: 21, radius: 48, delay: 1 },
+  'career-report': { x: 77, y: 21, radius: 48, delay: 2 },
+  'terminal-emulator': { x: 50, y: 36, radius: 50, delay: 3 },
+  'unknown-frequencies': { x: 50, y: 51, radius: 50, delay: 4 },
+  'sales-flow': { x: 23, y: 66, radius: 48, delay: 5 },
+  'shared-canvas': { x: 77, y: 66, radius: 48, delay: 6 },
+  'quickswitch-ui': { x: 50, y: 82, radius: 46, delay: 7 },
 };
 
 // Constellation network edges
 const CONSTELLATION_EDGES = [
+  // Top tier
   ['makerspace', 'patent-flow'],
   ['makerspace', 'career-report'],
   ['makerspace', 'terminal-emulator'],
+
+  // Upper diamond / lateral links
   ['patent-flow', 'terminal-emulator'],
   ['career-report', 'terminal-emulator'],
-  ['patent-flow', 'sales-flow'],
-  ['career-report', 'shared-canvas'],
-  ['terminal-emulator', 'unknown-frequencies'],
   ['patent-flow', 'unknown-frequencies'],
   ['career-report', 'unknown-frequencies'],
+  ['patent-flow', 'sales-flow'],
+  ['career-report', 'shared-canvas'],
+
+  // Center vertical spine
+  ['terminal-emulator', 'unknown-frequencies'],
+
+  // Lower diamond / lateral links
+  ['sales-flow', 'terminal-emulator'],
+  ['shared-canvas', 'terminal-emulator'],
   ['sales-flow', 'unknown-frequencies'],
   ['shared-canvas', 'unknown-frequencies'],
   ['sales-flow', 'quickswitch-ui'],
   ['shared-canvas', 'quickswitch-ui'],
+
+  // Bottom tier
   ['unknown-frequencies', 'quickswitch-ui'],
 ];
 
@@ -183,12 +194,12 @@ export function Constellation({
 
   return (
     <motion.div
-      className="relative w-full h-full max-h-[75vh] flex items-center justify-center overflow-visible select-none"
+      className="relative w-full h-full max-h-[78vh] flex items-center justify-center overflow-visible select-none"
       onClick={() => setActiveId(null)}
       animate={{
-        x: [0, 7, -5, 4, 0],
-        y: [0, -6, 6, -4, 0],
-        rotate: [0, 0.35, -0.3, 0.15, 0],
+        x: isMobile ? [0, 2, -2, 1, 0] : [0, 7, -5, 4, 0],
+        y: isMobile ? [0, -2, 2, -1, 0] : [0, -6, 6, -4, 0],
+        rotate: isMobile ? 0 : [0, 0.35, -0.3, 0.15, 0],
       }}
       transition={{
         duration: 16,

@@ -37,7 +37,7 @@ export default function Home() {
           filter: isFocused ? 'blur(2px)' : 'none',
         }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 pt-12 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
+        className="relative z-10 pt-3 sm:pt-6 md:pt-10 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
       >
         <motion.div
           initial={{ opacity: 0, y: -8 }}
@@ -55,7 +55,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-2xl md:text-4xl font-black tracking-tight text-white glow-text uppercase"
+          className="text-xl sm:text-2xl md:text-4xl font-black tracking-tight text-white glow-text uppercase"
         >
           azterisk.net
         </motion.h1>
@@ -64,7 +64,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="text-[11px] md:text-xs text-slate-400 max-w-md mt-0.5 font-mono"
+          className="text-[10px] sm:text-[11px] md:text-xs text-slate-400 max-w-xs sm:max-w-md mt-0.5 font-mono"
         >
           Interactive constellation of live production subdomains & architectures
         </motion.p>
