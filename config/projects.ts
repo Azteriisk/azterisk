@@ -425,6 +425,7 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
       'Real-time DSP audio plugin built with JUCE and C++ for intelligent background noise suppression.',
     fullWriteup:
       'SpectralSubtractor is a low-latency VST3 audio processing plugin built with JUCE and modern C++. It implements real-time spectral magnitude subtraction, FFT windowing, phase reconstruction, and dynamic noise floor profiling for professional digital audio workstations.',
+    screenshotUrl: '/screenshots/spectralsubtractor-preview.png',
     status: 'desktop',
     statusLabel: 'C++ / VST3 Plugin',
     projectType: 'desktop',
