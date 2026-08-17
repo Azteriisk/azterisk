@@ -405,6 +405,7 @@ export const SUBDOMAIN_PROJECTS: SubdomainProject[] = [
       'Client-side terminal portfolio emulator featuring a simulated UNIX filesystem and theme switching.',
     fullWriteup:
       'An interactive retro terminal emulator built with Next.js and TypeScript. Includes a simulated virtual filesystem (`cat`, `ls`, `grep`, `cd`), custom terminal color themes, command history, and instant client-side execution.',
+    screenshotUrl: '/screenshots/terminal-preview.png',
     status: 'active',
     statusLabel: 'Live Subdomain',
     projectType: 'subdomain',
@@ -428,6 +429,7 @@ export const SUBDOMAIN_PROJECTS: SubdomainProject[] = [
       'Live template switcher demonstrating seamless layout transformation with WebGL particle systems.',
     fullWriteup:
       'Quickswitch UI demonstrates real-time DOM restructuring and palette transitions across completely distinct UX design languages without page reloads, accompanied by an interactive GPU particle canvas.',
+    screenshotUrl: '/screenshots/quickswitch-preview.png',
     status: 'active',
     statusLabel: 'Live Subdomain',
     projectType: 'subdomain',
