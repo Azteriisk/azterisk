@@ -17,7 +17,7 @@ export default function Home() {
   const isFocused = activeProjectId !== null && activeProjectId !== '';
 
   return (
-    <main className="relative h-screen max-h-screen w-full flex flex-col justify-between overflow-hidden">
+    <main className={`relative w-full flex flex-col justify-between ${viewMode === 'list' ? 'min-h-screen overflow-y-auto' : 'h-screen max-h-screen overflow-hidden'}`}>
       {/* Fixed Cosmic Header - Dims smoothly when any node is hovered */}
       <motion.div
         animate={{
@@ -70,8 +70,8 @@ export default function Home() {
         </motion.p>
       </motion.div>
 
-      {/* Main Interactive Stage Area (Overflow visible so satellites & glow never get cut off) */}
-      <div className="relative z-10 flex-1 flex items-center justify-center w-full px-2 sm:px-4 overflow-visible">
+      {/* Main Interactive Stage Area */}
+      <div className={`relative z-10 w-full px-2 sm:px-4 ${viewMode === 'list' ? 'flex-none' : 'flex-1 flex items-center justify-center overflow-visible'}`}>
         <AnimatePresence mode="wait">
           {viewMode === 'constellation' ? (
             <motion.div
@@ -95,7 +95,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.35 }}
-              className="w-full h-full overflow-y-auto"
+              className="w-full"
             >
               <ProjectListView onSelectProject={setSelectedProject} />
             </motion.div>

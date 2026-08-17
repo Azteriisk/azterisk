@@ -230,7 +230,7 @@ export const SUBDOMAIN_PROJECTS: SubdomainProject[] = [
     name: 'CareerReport',
     subdomain: 'careerreport.azterisk.net',
     liveUrl: 'https://careerreport.azterisk.net',
-    githubUrl: 'https://github.com/Azteriisk/resume_builder',
+    githubUrl: 'https://github.com/Azteriisk/CareerReport',
     tagline: 'AI Executive Career Brief & Automated ATS Resume Engine',
     shortDescription:
       'Automated resume intelligence generator parsing work history into structured ATS-optimized dossiers.',
@@ -638,6 +638,62 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
     technologies: [
       { id: 'unreal', name: 'Unreal Engine 5', category: 'engine', websiteUrl: 'https://www.unrealengine.com', color: '#0e1128' },
       { id: 'cpp', name: 'C++', category: 'language', websiteUrl: 'https://isocpp.org', color: '#00599c' },
+    ],
+  },
+  {
+    id: 'stage',
+    name: 'Stage',
+    githubUrl: 'https://github.com/Azteriisk/stage',
+    tagline: 'Live-Coding Performance Environment for Music & Visuals',
+    shortDescription:
+      'Browser-based live-coding environment linking a Strudel music runtime to a GLSL shader runtime through a reactive binding layer.',
+    fullWriteup:
+      'Stage unifies sound and light into a single high-performance live-coding viewport. It links the Strudel pattern music runtime to a GLSL fragment shader pipeline through a central reactive binding layer — every beat, note, and envelope can drive shader uniforms in real time, enabling musical-visual performances entirely in the browser.',
+    status: 'active',
+    statusLabel: 'TypeScript / Live Code',
+    projectType: 'web',
+    isSubdomain: false,
+    technologies: [
+      { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
+      { id: 'glsl', name: 'GLSL Shaders', category: 'graphics', websiteUrl: 'https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language', color: '#990000' },
+      { id: 'strudel', name: 'Strudel', category: 'audio', websiteUrl: 'https://strudel.cc', color: '#a855f7' },
+    ],
+  },
+  {
+    id: 'sslb',
+    name: 'SSLB',
+    githubUrl: 'https://github.com/Azteriisk/sslb',
+    tagline: 'Turing-Complete Shader Transpiler & Interactive 3D Runner',
+    shortDescription:
+      'A turing-complete shader transpiler with a high-precision interactive 3D scene runner, built in Rust.',
+    fullWriteup:
+      'SSLB is a Turing-complete shader language transpiler that compiles a high-level shading language to GPU-executable code, paired with an interactive 3D runner for real-time visual debugging and iteration.',
+    status: 'offline',
+    statusLabel: 'Rust / Shader Compiler',
+    projectType: 'systems',
+    isSubdomain: false,
+    technologies: [
+      { id: 'rust', name: 'Rust', category: 'language', websiteUrl: 'https://www.rust-lang.org', color: '#ea580c' },
+      { id: 'glsl', name: 'GLSL / WGSL', category: 'graphics', websiteUrl: 'https://www.w3.org/TR/WGSL/', color: '#990000' },
+    ],
+  },
+  {
+    id: 'cs-330-portfolio',
+    name: 'CS-330 Portfolio',
+    githubUrl: 'https://github.com/Azteriisk/CS-330-Portfolio',
+    tagline: 'Computer Graphics & 3D Rendering Coursework Portfolio',
+    shortDescription:
+      'OpenGL coursework portfolio covering 3D object rendering, lighting models, texture mapping, and transformation hierarchies.',
+    fullWriteup:
+      'A comprehensive portfolio of CS-330 Computer Science coursework projects. Covers core real-time 3D graphics concepts including OpenGL pipeline setup, Phong lighting and material shading, UV texture mapping, camera systems, and scene transformation hierarchies — all built from scratch in C++ with GLFW and GLAD.',
+    status: 'offline',
+    statusLabel: 'C++ / OpenGL',
+    projectType: 'engine',
+    isSubdomain: false,
+    technologies: [
+      { id: 'cpp', name: 'C++ 17', category: 'language', websiteUrl: 'https://isocpp.org', color: '#00599c' },
+      { id: 'opengl', name: 'OpenGL', category: 'graphics', websiteUrl: 'https://www.opengl.org', color: '#5586a4' },
+      { id: 'glfw', name: 'GLFW', category: 'framework', websiteUrl: 'https://www.glfw.org', color: '#10b981' },
     ],
   },
 ];

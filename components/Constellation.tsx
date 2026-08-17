@@ -11,7 +11,7 @@ interface ConstellationProps {
   onActiveProjectChange?: (id: string | null) => void;
 }
 
-// Desktop coordinates (Unknown Frequencies in the center)
+// Desktop coordinates
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
   'makerspace': { x: 50, y: 19, radius: 76, delay: 0 },
   'patent-flow': { x: 25, y: 39, radius: 80, delay: 1 },
@@ -21,7 +21,7 @@ const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number
   'shared-canvas': { x: 76, y: 75, radius: 76, delay: 5 },
 };
 
-// Mobile coordinates (Unknown Frequencies in the middle hub)
+// Mobile coordinates
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
   'makerspace': { x: 50, y: 14, radius: 62, delay: 0 },
   'patent-flow': { x: 30, y: 29, radius: 64, delay: 1 },
@@ -31,7 +31,7 @@ const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number;
   'shared-canvas': { x: 70, y: 88, radius: 62, delay: 5 },
 };
 
-// Constellation network edges connecting all nodes through the center hub
+// Constellation network edges
 const CONSTELLATION_EDGES = [
   ['makerspace', 'patent-flow'],
   ['makerspace', 'career-report'],
@@ -45,6 +45,54 @@ const CONSTELLATION_EDGES = [
   ['sales-flow', 'shared-canvas'],
 ];
 
+/**
+ * Compute trimmed SVG percentage endpoints so each line stops exactly at
+ * the circle boundary of both nodes it connects.
+ *
+ * Approach: convert %-based positions → pixels using the measured SVG size
+ * (so the non-square aspect ratio is handled correctly), trim the segment in
+ * pixel space by each node's pixel radius, then convert back to percentages.
+ */
+function trimmedLine(
+  from: { x: number; y: number; radius: number },
+  to: { x: number; y: number; radius: number },
+  svgW: number,
+  svgH: number
+): { x1: string; y1: string; x2: string; y2: string } | null {
+  // % → pixels
+  const fx = (from.x / 100) * svgW;
+  const fy = (from.y / 100) * svgH;
+  const tx = (to.x / 100) * svgW;
+  const ty = (to.y / 100) * svgH;
+
+  const dx = tx - fx;
+  const dy = ty - fy;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  if (dist === 0) return null;
+
+  // Unit vector from → to
+  const ux = dx / dist;
+  const uy = dy / dist;
+
+  // Trim start by from.radius, trim end by to.radius (in real pixels)
+  const px1 = fx + ux * from.radius;
+  const py1 = fy + uy * from.radius;
+  const px2 = tx - ux * to.radius;
+  const py2 = ty - uy * to.radius;
+
+  // Safety: if nodes overlap the trimmed segment would flip — skip it
+  const trimDist = Math.sqrt((px2 - px1) ** 2 + (py2 - py1) ** 2);
+  if (trimDist < 1) return null;
+
+  // pixels → %
+  return {
+    x1: `${(px1 / svgW) * 100}%`,
+    y1: `${(py1 / svgH) * 100}%`,
+    x2: `${(px2 / svgW) * 100}%`,
+    y2: `${(py2 / svgH) * 100}%`,
+  };
+}
+
 export function Constellation({
   onSelectProject,
   activeProjectId: propActiveId,
@@ -52,7 +100,9 @@ export function Constellation({
 }: ConstellationProps) {
   const [internalActiveId, setInternalActiveId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [svgSize, setSvgSize] = useState<{ w: number; h: number } | null>(null);
   const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   const activeProjectId = propActiveId !== undefined ? propActiveId : internalActiveId;
 
@@ -66,7 +116,7 @@ export function Constellation({
     [onActiveProjectChange]
   );
 
-  // Centralized hover handler - instantly cancels any pending close timer
+  // Centralized hover handler — cancels any pending close timer immediately
   const handleNodeHover = useCallback(
     (id: string) => {
       if (leaveTimerRef.current) {
@@ -78,14 +128,13 @@ export function Constellation({
     [setActiveId]
   );
 
-  // Centralized leave handler - sets a grace period ONLY for this specific node
+  // Centralized leave handler — grace period so rapid moves don't flicker
   const handleNodeLeave = useCallback(
     (id: string) => {
       if (leaveTimerRef.current) {
         clearTimeout(leaveTimerRef.current);
       }
       leaveTimerRef.current = setTimeout(() => {
-        // Only clear if the active node is STILL the node that was left
         if (activeProjectId === id) {
           setActiveId(null);
         }
@@ -95,12 +144,29 @@ export function Constellation({
   );
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Measure the SVG element in real pixels so line trimming is accurate
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
+
+    // Seed immediately from bounding rect
+    const seed = el.getBoundingClientRect();
+    if (seed.width > 0) setSvgSize({ w: seed.width, h: seed.height });
+
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) setSvgSize({ w: width, h: height });
+      }
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
   const coordinatesMap = isMobile ? MOBILE_COORDINATES : DESKTOP_COORDINATES;
@@ -121,8 +187,9 @@ export function Constellation({
         ease: 'easeInOut',
       }}
     >
-      {/* Constellation SVG Guide Lines — trimmed so they stop at node circle edges */}
+      {/* Constellation SVG Guide Lines — trimmed to circle edges via pixel-space math */}
       <svg
+        ref={svgRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -134,39 +201,20 @@ export function Constellation({
           const isConnectedToActive =
             activeProjectId === fromId || activeProjectId === toId;
 
-          // Calculate trimmed endpoints so lines stop at circle circumferences
-          // We need to work in % units converted to a common scale
-          // Use a 1000x1000 virtual canvas to compute directions
-          const scale = 1000;
-          const fx = (from.x / 100) * scale;
-          const fy = (from.y / 100) * scale;
-          const tx = (to.x / 100) * scale;
-          const ty = (to.y / 100) * scale;
-          const dx = tx - fx;
-          const dy = ty - fy;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist === 0) return null;
-          const ux = dx / dist;
-          const uy = dy / dist;
+          // Use trimmed endpoints once SVG size is measured; fall back to centers
+          const coords = svgSize
+            ? trimmedLine(from, to, svgSize.w, svgSize.h)
+            : { x1: `${from.x}%`, y1: `${from.y}%`, x2: `${to.x}%`, y2: `${to.y}%` };
 
-          // Trim by each node's radius (in % converted to virtual-canvas units)
-          // We use a ratio of node radius to viewport width (~1000 wide virtual)
-          // Approximate: container is roughly 1000 virtual wide and proportional height
-          const fromTrim = (from.radius / 100) * (scale * 0.55);
-          const toTrim = (to.radius / 100) * (scale * 0.55);
-
-          const x1 = fx + ux * fromTrim;
-          const y1 = fy + uy * fromTrim;
-          const x2 = tx - ux * toTrim;
-          const y2 = ty - uy * toTrim;
+          if (!coords) return null;
 
           return (
             <motion.line
               key={`${fromId}-${toId}-${idx}`}
-              x1={`${(x1 / scale) * 100}%`}
-              y1={`${(y1 / scale) * 100}%`}
-              x2={`${(x2 / scale) * 100}%`}
-              y2={`${(y2 / scale) * 100}%`}
+              x1={coords.x1}
+              y1={coords.y1}
+              x2={coords.x2}
+              y2={coords.y2}
               stroke={
                 isConnectedToActive
                   ? 'rgba(255, 255, 255, 0.65)'

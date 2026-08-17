@@ -205,12 +205,12 @@ export function ProjectListView({ onSelectProject }: ProjectListViewProps) {
                     </div>
 
                     <div className="flex items-baseline gap-3">
-                      <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-sky-300 transition-colors">
+                      <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-sky-300 transition-colors duration-300">
                         {project.name}
                       </h3>
                       <ArrowUpRight
                         size={18}
-                        className="text-slate-500 group-hover:text-white transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        className="text-slate-500 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                       />
                     </div>
 

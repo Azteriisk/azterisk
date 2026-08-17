@@ -104,6 +104,7 @@ export function ConstellationNode({
         <div
           onClick={handleClick}
           onTouchEnd={handleTouch}
+          style={{ transition: 'filter 0.3s ease-out' }}
           className={`relative w-full h-full rounded-full flex flex-col items-center justify-center cursor-pointer select-none outline-none focus:outline-none focus:ring-0 ring-0 border-0 ${
             isActive ? 'glow-circle-active' : ''
           }`}
@@ -113,12 +114,15 @@ export function ConstellationNode({
             viewBox="0 0 200 200"
             className="absolute inset-0 w-full h-full pointer-events-none cosmic-wobble"
           >
-            {/* Background fill - transparent when idle */}
-            <circle
+            {/* Background fill — animates in/out smoothly on hover */}
+            <motion.circle
               cx="100"
               cy="100"
               r="92"
-              fill={isActive ? 'rgba(10, 12, 24, 0.7)' : 'transparent'}
+              fill="rgba(10, 12, 24, 0.85)"
+              initial={false}
+              animate={{ fillOpacity: isActive ? 1 : 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
             />
 
             {/* Permanent Subtle Grey Outer Circle */}
