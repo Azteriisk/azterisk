@@ -202,6 +202,64 @@ export function Constellation({
         className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <defs>
+          {CONSTELLATION_EDGES.map(([fromId, toId], idx) => {
+            const from = coordinatesMap[fromId];
+            const to = coordinatesMap[toId];
+            if (!from || !to) return null;
+
+            const isFromActive = activeProjectId === fromId;
+            const isToActive = activeProjectId === toId;
+
+            // Use trimmed endpoints once SVG size is measured; fall back to centers
+            const coords = svgSize
+              ? trimmedLine(from, to, svgSize.w, svgSize.h)
+              : { x1: `${from.x}%`, y1: `${from.y}%`, x2: `${to.x}%`, y2: `${to.y}%` };
+
+            if (!coords) return null;
+
+            const gradId = `edge-grad-${fromId}-${toId}-${idx}`;
+
+            return (
+              <linearGradient
+                key={gradId}
+                id={gradId}
+                gradientUnits="userSpaceOnUse"
+                x1={coords.x1}
+                y1={coords.y1}
+                x2={coords.x2}
+                y2={coords.y2}
+              >
+                {isFromActive ? (
+                  // fromId is the hovered active node -> bright at origin, fading out towards target
+                  <>
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+                    <stop offset="25%" stopColor="#ffffff" stopOpacity="0.60" />
+                    <stop offset="55%" stopColor="#ffffff" stopOpacity="0.22" />
+                    <stop offset="85%" stopColor="#ffffff" stopOpacity="0.04" />
+                    <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+                  </>
+                ) : isToActive ? (
+                  // toId is the hovered active node -> fading in from inactive origin towards active target
+                  <>
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+                    <stop offset="15%" stopColor="#ffffff" stopOpacity="0.04" />
+                    <stop offset="45%" stopColor="#ffffff" stopOpacity="0.22" />
+                    <stop offset="75%" stopColor="#ffffff" stopOpacity="0.60" />
+                    <stop offset="100%" stopColor="#ffffff" stopOpacity="0.85" />
+                  </>
+                ) : (
+                  // Neither is active
+                  <>
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity={isAnyActive ? 0.02 : 0.12} />
+                    <stop offset="100%" stopColor="#ffffff" stopOpacity={isAnyActive ? 0.02 : 0.12} />
+                  </>
+                )}
+              </linearGradient>
+            );
+          })}
+        </defs>
+
         {CONSTELLATION_EDGES.map(([fromId, toId], idx) => {
           const from = coordinatesMap[fromId];
           const to = coordinatesMap[toId];
@@ -217,6 +275,8 @@ export function Constellation({
 
           if (!coords) return null;
 
+          const gradId = `edge-grad-${fromId}-${toId}-${idx}`;
+
           return (
             <motion.line
               key={`${fromId}-${toId}-${idx}`}
@@ -224,23 +284,12 @@ export function Constellation({
               y1={coords.y1}
               x2={coords.x2}
               y2={coords.y2}
-              stroke={
-                isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.65)'
-                  : isAnyActive
-                  ? 'rgba(255, 255, 255, 0.02)'
-                  : 'rgba(255, 255, 255, 0.12)'
-              }
+              stroke={`url(#${gradId})`}
               strokeWidth={isConnectedToActive ? '1.8' : '1'}
               strokeDasharray={isConnectedToActive ? '4 4' : '3 6'}
               initial={{ opacity: 0 }}
               animate={{
                 opacity: isAnyActive && !isConnectedToActive ? 0.15 : 1,
-                stroke: isConnectedToActive
-                  ? 'rgba(255, 255, 255, 0.65)'
-                  : isAnyActive
-                  ? 'rgba(255, 255, 255, 0.02)'
-                  : 'rgba(255, 255, 255, 0.12)',
               }}
               transition={{ duration: 0.25 }}
             />
