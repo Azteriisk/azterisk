@@ -180,18 +180,18 @@ export function ConstellationNode({
           </svg>
 
           {/* Node Interior Content (pointer-events-none ensures unified cursor hit) */}
-          <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 pointer-events-none">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-1.5 sm:px-3 max-w-[90%] pointer-events-none">
             {/* Subdomain Pill */}
-            <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1.5 px-1.5 sm:px-2.5 py-[1px] sm:py-0.5 rounded-full bg-white/5 sm:bg-white/10 border border-white/10 sm:border-white/20">
+            <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1.5 px-1.5 sm:px-2.5 py-[1px] sm:py-0.5 rounded-full bg-white/5 sm:bg-white/10 border border-white/10 sm:border-white/20 shrink-0">
               <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="font-mono text-[7.5px] sm:text-[11px] font-medium tracking-wider text-slate-300">
+              <span className="font-mono text-[8px] sm:text-[10.5px] font-medium tracking-wider text-slate-300 whitespace-nowrap">
                 {(project.subdomain || project.id).split('.')[0]}.
               </span>
             </div>
 
             {/* Project Title */}
             <h3
-              className={`font-sans font-bold text-[11px] sm:text-sm md:text-base leading-tight tracking-wide text-white transition-all duration-200 line-clamp-2 ${
+              className={`font-sans font-bold text-[10.5px] sm:text-xs md:text-sm leading-[1.18] tracking-wide text-white transition-all duration-200 line-clamp-2 ${
                 isActive ? 'glow-text text-white' : 'text-slate-100'
               }`}
             >
