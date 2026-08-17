@@ -13,36 +13,45 @@ interface ConstellationProps {
 
 // Desktop coordinates
 const DESKTOP_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 19, radius: 76, delay: 0 },
-  'patent-flow': { x: 25, y: 39, radius: 80, delay: 1 },
-  'career-report': { x: 75, y: 39, radius: 80, delay: 2 },
-  'unknown-frequencies': { x: 50, y: 55, radius: 80, delay: 3 },
-  'sales-flow': { x: 24, y: 75, radius: 76, delay: 4 },
-  'shared-canvas': { x: 76, y: 75, radius: 76, delay: 5 },
+  'makerspace': { x: 50, y: 15, radius: 76, delay: 0 },
+  'patent-flow': { x: 22, y: 36, radius: 78, delay: 1 },
+  'terminal-emulator': { x: 50, y: 39, radius: 82, delay: 2 },
+  'career-report': { x: 78, y: 36, radius: 78, delay: 3 },
+  'unknown-frequencies': { x: 50, y: 62, radius: 82, delay: 4 },
+  'sales-flow': { x: 22, y: 64, radius: 78, delay: 5 },
+  'shared-canvas': { x: 78, y: 64, radius: 78, delay: 6 },
+  'quickswitch-ui': { x: 50, y: 86, radius: 76, delay: 7 },
 };
 
 // Mobile coordinates
 const MOBILE_COORDINATES: Record<string, { x: number; y: number; radius: number; delay: number }> = {
-  'makerspace': { x: 50, y: 14, radius: 62, delay: 0 },
-  'patent-flow': { x: 30, y: 29, radius: 64, delay: 1 },
-  'career-report': { x: 70, y: 44, radius: 66, delay: 2 },
-  'unknown-frequencies': { x: 50, y: 59, radius: 66, delay: 3 },
-  'sales-flow': { x: 30, y: 74, radius: 62, delay: 4 },
-  'shared-canvas': { x: 70, y: 88, radius: 62, delay: 5 },
+  'makerspace': { x: 50, y: 9, radius: 58, delay: 0 },
+  'patent-flow': { x: 26, y: 21, radius: 60, delay: 1 },
+  'career-report': { x: 74, y: 32, radius: 60, delay: 2 },
+  'terminal-emulator': { x: 26, y: 44, radius: 62, delay: 3 },
+  'unknown-frequencies': { x: 74, y: 56, radius: 62, delay: 4 },
+  'sales-flow': { x: 26, y: 68, radius: 60, delay: 5 },
+  'shared-canvas': { x: 74, y: 80, radius: 60, delay: 6 },
+  'quickswitch-ui': { x: 50, y: 92, radius: 58, delay: 7 },
 };
 
 // Constellation network edges
 const CONSTELLATION_EDGES = [
   ['makerspace', 'patent-flow'],
   ['makerspace', 'career-report'],
-  ['makerspace', 'unknown-frequencies'],
-  ['patent-flow', 'unknown-frequencies'],
-  ['career-report', 'unknown-frequencies'],
+  ['makerspace', 'terminal-emulator'],
+  ['patent-flow', 'terminal-emulator'],
+  ['career-report', 'terminal-emulator'],
   ['patent-flow', 'sales-flow'],
   ['career-report', 'shared-canvas'],
-  ['unknown-frequencies', 'sales-flow'],
-  ['unknown-frequencies', 'shared-canvas'],
-  ['sales-flow', 'shared-canvas'],
+  ['terminal-emulator', 'unknown-frequencies'],
+  ['patent-flow', 'unknown-frequencies'],
+  ['career-report', 'unknown-frequencies'],
+  ['sales-flow', 'unknown-frequencies'],
+  ['shared-canvas', 'unknown-frequencies'],
+  ['sales-flow', 'quickswitch-ui'],
+  ['shared-canvas', 'quickswitch-ui'],
+  ['unknown-frequencies', 'quickswitch-ui'],
 ];
 
 /**

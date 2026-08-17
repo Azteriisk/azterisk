@@ -394,6 +394,52 @@ export const SUBDOMAIN_PROJECTS: SubdomainProject[] = [
       },
     ],
   },
+  {
+    id: 'terminal-emulator',
+    name: 'Terminal Portfolio',
+    subdomain: 'terminal.azterisk.net',
+    liveUrl: 'https://terminal.azterisk.net',
+    githubUrl: 'https://github.com/Azteriisk/terminal-emulator',
+    tagline: 'Interactive Next.js Retro CLI with Virtual Filesystem',
+    shortDescription:
+      'Client-side terminal portfolio emulator featuring a simulated UNIX filesystem and theme switching.',
+    fullWriteup:
+      'An interactive retro terminal emulator built with Next.js and TypeScript. Includes a simulated virtual filesystem (`cat`, `ls`, `grep`, `cd`), custom terminal color themes, command history, and instant client-side execution.',
+    status: 'active',
+    statusLabel: 'Live Subdomain',
+    projectType: 'subdomain',
+    isSubdomain: true,
+    technologies: [
+      { id: 'nextjs', name: 'Next.js 16', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
+      { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
+      { id: 'tailwind', name: 'Tailwind CSS', category: 'styling', websiteUrl: 'https://tailwindcss.com', color: '#38bdf8' },
+      { id: 'indexeddb', name: 'SQLite DB', category: 'database', websiteUrl: 'https://sqlite.org', color: '#003b57' },
+      { id: 'tools', name: 'UNIX CLI Emulation', category: 'tools', websiteUrl: 'https://terminal.azterisk.net', color: '#10b981' },
+    ],
+  },
+  {
+    id: 'quickswitch-ui',
+    name: 'Quickswitch UI',
+    subdomain: 'quickswitch.azterisk.net',
+    liveUrl: 'https://quickswitch.azterisk.net',
+    githubUrl: 'https://github.com/Azteriisk/quickswitch-ui',
+    tagline: 'Live Next.js UI Template Switching Engine & WebGL Particles',
+    shortDescription:
+      'Live template switcher demonstrating seamless layout transformation with WebGL particle systems.',
+    fullWriteup:
+      'Quickswitch UI demonstrates real-time DOM restructuring and palette transitions across completely distinct UX design languages without page reloads, accompanied by an interactive GPU particle canvas.',
+    status: 'active',
+    statusLabel: 'Live Subdomain',
+    projectType: 'subdomain',
+    isSubdomain: true,
+    technologies: [
+      { id: 'nextjs', name: 'Next.js 15', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
+      { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
+      { id: 'webgl', name: 'WebGL Particles', category: 'graphics', websiteUrl: 'https://get.webgl.org', color: '#eab308' },
+      { id: 'canvas', name: 'Three.js Engine', category: 'graphics', websiteUrl: 'https://threejs.org', color: '#f43f5e' },
+      { id: 'styling', name: 'Dynamic Themes', category: 'styling', websiteUrl: 'https://quickswitch.azterisk.net', color: '#a855f7' },
+    ],
+  },
 ];
 
 export const STANDALONE_PROJECTS: SubdomainProject[] = [
@@ -491,48 +537,6 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
       { id: 'go', name: 'Go (Golang)', category: 'language', websiteUrl: 'https://go.dev', color: '#00add8' },
       { id: 'indexeddb', name: 'Local SQLite', category: 'database', websiteUrl: 'https://sqlite.org', color: '#003b57' },
       { id: 'tools', name: 'Bubble Tea TUI', category: 'tools', websiteUrl: 'https://github.com/charmbracelet/bubbletea', color: '#f43f5e' },
-    ],
-  },
-  {
-    id: 'quickswitch-ui',
-    name: 'Quickswitch UI',
-    subdomain: 'quickswitch.azterisk.net',
-    liveUrl: 'https://quickswitch.azterisk.net',
-    githubUrl: 'https://github.com/Azteriisk/quickswitch-ui',
-    tagline: 'Live Next.js UI Template Switching Engine & WebGL Particles',
-    shortDescription:
-      'Live template switcher demonstrating seamless layout transformation with WebGL particle systems.',
-    fullWriteup:
-      'Quickswitch UI demonstrates real-time DOM restructuring and palette transitions across completely distinct UX design languages without page reloads, accompanied by an interactive GPU particle canvas.',
-    status: 'active',
-    statusLabel: 'Live Subdomain',
-    projectType: 'subdomain',
-    isSubdomain: true,
-    technologies: [
-      { id: 'nextjs', name: 'Next.js', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
-      { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
-      { id: 'webgl', name: 'WebGL Particles', category: 'graphics', websiteUrl: 'https://get.webgl.org', color: '#eab308' },
-    ],
-  },
-  {
-    id: 'terminal-emulator',
-    name: 'Terminal Portfolio',
-    subdomain: 'terminal.azterisk.net',
-    liveUrl: 'https://terminal.azterisk.net',
-    githubUrl: 'https://github.com/Azteriisk/terminal-emulator',
-    tagline: 'Interactive Next.js Retro CLI with Virtual Filesystem',
-    shortDescription:
-      'Client-side terminal portfolio emulator featuring a simulated UNIX filesystem and theme switching.',
-    fullWriteup:
-      'An interactive retro terminal emulator built with Next.js and TypeScript. Includes a simulated virtual filesystem (`cat`, `ls`, `grep`, `cd`), custom terminal color themes, command history, and instant client-side execution.',
-    status: 'active',
-    statusLabel: 'Live Subdomain',
-    projectType: 'subdomain',
-    isSubdomain: true,
-    technologies: [
-      { id: 'nextjs', name: 'Next.js', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
-      { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
-      { id: 'tailwind', name: 'Tailwind CSS', category: 'styling', websiteUrl: 'https://tailwindcss.com', color: '#38bdf8' },
     ],
   },
   {
