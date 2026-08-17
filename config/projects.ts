@@ -414,7 +414,7 @@ export const SUBDOMAIN_PROJECTS: SubdomainProject[] = [
       { id: 'nextjs', name: 'Next.js 16', category: 'framework', websiteUrl: 'https://nextjs.org', color: '#ffffff' },
       { id: 'typescript', name: 'TypeScript', category: 'language', websiteUrl: 'https://www.typescriptlang.org', color: '#3178c6' },
       { id: 'tailwind', name: 'Tailwind CSS', category: 'styling', websiteUrl: 'https://tailwindcss.com', color: '#38bdf8' },
-      { id: 'indexeddb', name: 'SQLite DB', category: 'database', websiteUrl: 'https://sqlite.org', color: '#003b57' },
+      { id: 'indexeddb', name: 'SQLite DB', category: 'database', websiteUrl: 'https://sqlite.org', color: '#f59e0b' },
       { id: 'tools', name: 'UNIX CLI Emulation', category: 'tools', websiteUrl: 'https://terminal.azterisk.net', color: '#10b981' },
     ],
   },
