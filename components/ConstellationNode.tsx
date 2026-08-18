@@ -18,6 +18,81 @@ interface ConstellationNodeProps {
   onLeave: (id: string) => void;
 }
 
+interface SwayProfile {
+  x: number[];
+  y: number[];
+  rotate: number[];
+  duration: number;
+}
+
+// Individual organic micro-sway profiles for each node to break lockstep uniformity
+const NODE_SWAY_PROFILES: Record<string, SwayProfile> = {
+  'makerspace': {
+    x: [0, -2.8, 3.2, -1.6, 0],
+    y: [0, 3.6, -2.6, 1.4, 0],
+    rotate: [0, -0.7, 0.5, -0.3, 0],
+    duration: 7.2,
+  },
+  'patent-flow': {
+    x: [0, 3.4, -2.2, 1.8, 0],
+    y: [0, -3.2, 3.4, -1.2, 0],
+    rotate: [0, 0.8, -0.6, 0.4, 0],
+    duration: 8.4,
+  },
+  'terminal-emulator': {
+    x: [0, -3.2, 2.0, -2.4, 0],
+    y: [0, -2.4, 3.0, -1.8, 0],
+    rotate: [0, -0.5, 0.7, -0.4, 0],
+    duration: 6.3,
+  },
+  'career-report': {
+    x: [0, -2.6, 3.6, -1.8, 0],
+    y: [0, 3.0, -3.2, 2.2, 0],
+    rotate: [0, 0.7, -0.8, 0.3, 0],
+    duration: 7.8,
+  },
+  'unknown-frequencies': {
+    x: [0, 3.6, -3.0, 2.2, 0],
+    y: [0, 2.6, -3.6, 1.8, 0],
+    rotate: [0, -0.8, 0.6, -0.3, 0],
+    duration: 9.1,
+  },
+  'sales-flow': {
+    x: [0, -3.4, 2.6, -1.6, 0],
+    y: [0, 3.2, -2.8, 2.0, 0],
+    rotate: [0, 0.6, -0.7, 0.5, 0],
+    duration: 6.8,
+  },
+  'shared-canvas': {
+    x: [0, 2.8, -3.6, 2.0, 0],
+    y: [0, -3.4, 2.6, -1.6, 0],
+    rotate: [0, -0.9, 0.6, -0.4, 0],
+    duration: 7.5,
+  },
+  'quickswitch-ui': {
+    x: [0, -3.0, 3.4, -2.0, 0],
+    y: [0, -2.6, 3.2, -1.6, 0],
+    rotate: [0, 0.5, -0.5, 0.7, 0],
+    duration: 8.2,
+  },
+};
+
+function getNodeSwayProfile(id: string, floatDelay: number): SwayProfile {
+  if (NODE_SWAY_PROFILES[id]) {
+    return NODE_SWAY_PROFILES[id];
+  }
+  const seed = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), floatDelay * 17);
+  const dur = 6.0 + (seed % 35) / 10;
+  const xDir = seed % 2 === 0 ? 1 : -1;
+  const yDir = (seed >> 1) % 2 === 0 ? 1 : -1;
+  return {
+    x: [0, 3.0 * xDir, -2.5 * xDir, 1.8 * xDir, 0],
+    y: [0, -3.0 * yDir, 2.8 * yDir, -1.5 * yDir, 0],
+    rotate: [0, 0.6 * xDir, -0.5 * yDir, 0.3 * xDir, 0],
+    duration: dur,
+  };
+}
+
 export function ConstellationNode({
   project,
   x,
@@ -31,6 +106,9 @@ export function ConstellationNode({
   onLeave,
 }: ConstellationNodeProps) {
   const diameter = radius * 2;
+  const isMobile = radius <= 60;
+  const swayScale = isMobile ? 0.55 : 1.0;
+  const sway = getNodeSwayProfile(project.id, floatDelay);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -61,19 +139,34 @@ export function ConstellationNode({
       onMouseEnter={() => onHover(project.id)}
       onMouseLeave={() => onLeave(project.id)}
     >
-      {/* Node Container with fixed constant size and zero morphing */}
+      {/* Secondary Individual Sway Layer — asynchronous organic micro-drift */}
       <motion.div
-        className="relative w-full h-full flex items-center justify-center"
-        initial={{ opacity: 0 }}
+        className="w-full h-full flex items-center justify-center"
         animate={{
-          opacity: isDimmed ? 0.2 : 1,
-          filter: isDimmed ? 'blur(1.5px)' : 'none',
+          x: sway.x.map((v) => v * swayScale),
+          y: sway.y.map((v) => v * swayScale),
+          rotate: sway.rotate.map((v) => v * swayScale),
         }}
         transition={{
-          opacity: { duration: 0.2 },
-          filter: { duration: 0.2 },
+          duration: sway.duration,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: floatDelay * 0.35,
         }}
       >
+        {/* Node Container with fixed constant size and zero morphing */}
+        <motion.div
+          className="relative w-full h-full flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: isDimmed ? 0.2 : 1,
+            filter: isDimmed ? 'blur(1.5px)' : 'none',
+          }}
+          transition={{
+            opacity: { duration: 0.2 },
+            filter: { duration: 0.2 },
+          }}
+        >
         {/* Satellites Orbit */}
         <SatelliteOrbit
           technologies={project.technologies}
@@ -200,6 +293,7 @@ export function ConstellationNode({
           </div>
         </div>
       </motion.div>
-    </div>
-  );
+    </motion.div>
+  </div>
+);
 }
