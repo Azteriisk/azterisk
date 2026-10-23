@@ -111,12 +111,12 @@ export function ConstellationNode({
   const sway = getNodeSwayProfile(project.id, floatDelay);
 
   // Dynamic proportional typography & badges strictly tailored to radius
-  const pillTextSize = radius < 38 ? '7.5px' : radius < 50 ? '8.5px' : radius < 64 ? '9.5px' : '10.5px';
-  const dotSize = radius < 40 ? 3.5 : radius < 56 ? 4.5 : 5.5;
-  const titleTextSize = radius < 38 ? '9px' : radius < 50 ? '10.5px' : radius < 64 ? '12px' : '13.5px';
-  const titleLeading = radius < 50 ? '1.14' : '1.18';
-  const pillPadding = radius < 40 ? '1px 5px' : radius < 56 ? '1.5px 7px' : '2px 9px';
-  const pillMarginBottom = radius < 40 ? '1px' : radius < 56 ? '2.5px' : '4px';
+  const pillTextSize = radius < 42 ? '7.5px' : radius < 55 ? '8.5px' : radius < 70 ? '9.5px' : '10.5px';
+  const dotSize = radius < 45 ? 3.5 : radius < 60 ? 4 : 5;
+  const titleTextSize = radius < 42 ? '9.5px' : radius < 55 ? '11px' : radius < 70 ? '12px' : '13.5px';
+  const titleLeading = radius < 55 ? '1.15' : '1.18';
+  const pillPadding = radius < 45 ? '1px 5px' : radius < 60 ? '1.5px 6.5px' : '2px 8px';
+  const pillMarginBottom = radius < 45 ? '1.5px' : radius < 60 ? '2.5px' : '3.5px';
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -219,7 +219,7 @@ export function ConstellationNode({
             <motion.circle
               cx="100"
               cy="100"
-              r="94"
+              r="95"
               fill="rgba(10, 12, 24, 0.85)"
               initial={false}
               animate={{ fillOpacity: isActive ? 1 : 0 }}
@@ -230,7 +230,7 @@ export function ConstellationNode({
             <circle
               cx="100"
               cy="100"
-              r="94"
+              r="95"
               fill="none"
               stroke="rgba(148, 163, 184, 0.35)"
               strokeWidth="1.5"
@@ -240,7 +240,7 @@ export function ConstellationNode({
             <circle
               cx="100"
               cy="100"
-              r="87"
+              r="89"
               fill="none"
               stroke="rgba(148, 163, 184, 0.18)"
               strokeWidth="0.8"
@@ -251,7 +251,7 @@ export function ConstellationNode({
             <motion.circle
               cx="100"
               cy="100"
-              r="94"
+              r="95"
               fill="none"
               stroke="#ffffff"
               strokeWidth="2.5"
@@ -267,7 +267,7 @@ export function ConstellationNode({
             <motion.circle
               cx="100"
               cy="100"
-              r="87"
+              r="89"
               fill="none"
               stroke="#ffffff"
               strokeWidth="1"
@@ -281,7 +281,7 @@ export function ConstellationNode({
           </svg>
 
           {/* Node Interior Content (pointer-events-none ensures unified cursor hit) */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center px-1 max-w-[88%] pointer-events-none">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-1 max-w-[82%] pointer-events-none">
             {/* Subdomain Pill */}
             <div
               className="flex items-center gap-1 rounded-full bg-white/10 border border-white/20 shrink-0"
@@ -295,7 +295,7 @@ export function ConstellationNode({
                 style={{ width: dotSize, height: dotSize }}
               />
               <span
-                className="font-mono font-medium tracking-wider text-slate-300 whitespace-nowrap"
+                className="font-mono font-medium tracking-normal text-slate-300 whitespace-nowrap"
                 style={{ fontSize: pillTextSize }}
               >
                 {(project.subdomain || project.id).split('.')[0]}.
@@ -304,7 +304,7 @@ export function ConstellationNode({
 
             {/* Project Title */}
             <h3
-              className={`font-sans font-bold tracking-wide text-white transition-all duration-200 line-clamp-2 ${
+              className={`font-sans font-bold tracking-tight text-white transition-all duration-200 line-clamp-2 ${
                 isActive ? 'glow-text text-white' : 'text-slate-100'
               }`}
               style={{

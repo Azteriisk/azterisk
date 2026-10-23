@@ -18,28 +18,28 @@ interface CelestialSpec {
   delay: number;
 }
 
-// Desktop coordinates and celestial size weights (binary-star orbital diamond layout)
+// Desktop coordinates and celestial size weights (binary-star orbital diamond layout with spacious interior)
 const DESKTOP_SPECS: Record<string, CelestialSpec> = {
-  'makerspace':          { x: 50, y: 12, weight: 1.15, delay: 0 }, // Top apex hub anchor
-  'patent-flow':         { x: 17, y: 32, weight: 0.94, delay: 1 }, // Upper-left feature wing
-  'career-report':       { x: 83, y: 32, weight: 0.98, delay: 3 }, // Upper-right feature wing
-  'terminal-emulator':   { x: 37, y: 50, weight: 1.25, delay: 2 }, // Core interactive flagship (largest)
-  'unknown-frequencies': { x: 63, y: 50, weight: 1.12, delay: 4 }, // Central audio-visual core
-  'sales-flow':          { x: 17, y: 68, weight: 0.78, delay: 5 }, // Lower-left compact satellite
-  'shared-canvas':       { x: 83, y: 68, weight: 0.82, delay: 6 }, // Lower-right satellite
-  'quickswitch-ui':      { x: 50, y: 88, weight: 0.92, delay: 7 }, // Bottom apex anchor
+  'makerspace':          { x: 50, y: 11, weight: 1.28, delay: 0 }, // Top apex hub anchor
+  'patent-flow':         { x: 15, y: 26, weight: 1.12, delay: 1 }, // Upper-left feature wing
+  'career-report':       { x: 85, y: 26, weight: 1.15, delay: 3 }, // Upper-right feature wing
+  'terminal-emulator':   { x: 36, y: 50, weight: 1.38, delay: 2 }, // Core interactive flagship (largest)
+  'unknown-frequencies': { x: 64, y: 50, weight: 1.26, delay: 4 }, // Central audio-visual core
+  'sales-flow':          { x: 15, y: 74, weight: 1.05, delay: 5 }, // Lower-left compact satellite
+  'shared-canvas':       { x: 85, y: 74, weight: 1.08, delay: 6 }, // Lower-right satellite
+  'quickswitch-ui':      { x: 50, y: 89, weight: 1.18, delay: 7 }, // Bottom apex anchor
 };
 
 // Mobile coordinates and celestial size weights (spacious 1-2-2-2-1 layout)
 const MOBILE_SPECS: Record<string, CelestialSpec> = {
-  'makerspace':          { x: 50, y: 7.5,  weight: 1.15, delay: 0 },
-  'patent-flow':         { x: 23, y: 22.5, weight: 0.94, delay: 1 },
-  'career-report':       { x: 77, y: 22.5, weight: 0.98, delay: 2 },
-  'terminal-emulator':   { x: 23, y: 47.5, weight: 1.25, delay: 3 },
-  'unknown-frequencies': { x: 77, y: 47.5, weight: 1.10, delay: 4 },
-  'sales-flow':          { x: 23, y: 72.5, weight: 0.78, delay: 5 },
-  'shared-canvas':       { x: 77, y: 72.5, weight: 0.82, delay: 6 },
-  'quickswitch-ui':      { x: 50, y: 88.0, weight: 0.92, delay: 7 },
+  'makerspace':          { x: 50, y: 11.0, weight: 1.25, delay: 0 },
+  'patent-flow':         { x: 24, y: 25.5, weight: 1.10, delay: 1 },
+  'career-report':       { x: 76, y: 25.5, weight: 1.12, delay: 2 },
+  'terminal-emulator':   { x: 24, y: 49.0, weight: 1.35, delay: 3 },
+  'unknown-frequencies': { x: 76, y: 49.0, weight: 1.22, delay: 4 },
+  'sales-flow':          { x: 24, y: 72.5, weight: 1.04, delay: 5 },
+  'shared-canvas':       { x: 76, y: 72.5, weight: 1.06, delay: 6 },
+  'quickswitch-ui':      { x: 50, y: 88.0, weight: 1.16, delay: 7 },
 };
 
 /**
@@ -58,8 +58,10 @@ function computeDynamicCoordinates(
   // Margin from outer stage boundaries
   const MARGIN = isMobile ? 8 : 12;
 
-  // Upper bound base radius for spacious screens
-  const targetBase = isMobile ? 44 : 64;
+  // Dynamic target base that adapts to screen canvas size
+  const targetBase = isMobile
+    ? Math.min(48, Math.max(38, Math.min(stageW * 0.11, stageH * 0.075)))
+    : Math.min(82, Math.max(58, Math.min(stageW * 0.07, stageH * 0.16)));
   let maxBase = targetBase;
 
   const keys = Object.keys(specs);
@@ -94,8 +96,8 @@ function computeDynamicCoordinates(
     }
   }
 
-  // Generous floor so labels and badges never touch the circle perimeter from within
-  const minBase = isMobile ? 32 : 46;
+  // Generous floor ensuring comfortable room for text & pills without internal crowding
+  const minBase = isMobile ? 36 : 58;
   const finalBase = Math.max(minBase, maxBase);
 
   const result: Record<string, { x: number; y: number; radius: number; delay: number }> = {};
@@ -169,9 +171,9 @@ function trimmedLine(
   const ux = dx / dist;
   const uy = dy / dist;
 
-  // Trim to visible outer ring (0.94 of node diameter)
-  const rFrom = from.radius * 0.94;
-  const rTo = to.radius * 0.94;
+  // Trim to visible outer ring (0.95 of node radius)
+  const rFrom = from.radius * 0.95;
+  const rTo = to.radius * 0.95;
 
   const px1 = fx + ux * rFrom;
   const py1 = fy + uy * rFrom;
