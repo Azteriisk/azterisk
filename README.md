@@ -34,6 +34,25 @@ Toggle into **Directory Mode** for a high-density, searchable portfolio list fea
 
 ---
 
+### 4. Recent Featured Projects & Native Desktop
+
+#### Azterisk Hero Companion (v1.0 Release)
+Modern companion utility for Clone Hero and YARG players built in Godot 4: Enchor chart discovery, Spotify PKCE playlist import, graph-based MusicMap recommendations, and on-the-fly `.yargsong` CON conversion.
+
+![Azterisk Hero Companion](public/screenshots/clonehero-preview.png)
+
+#### The Omarchy Linux Suite (Marketplace Verified)
+Cohesive, hardened desktop ecosystem for Arch Linux & Hyprland: native Steam Wallpaper Engine runner, dual-boot Secure Boot manager, display positioning GUI, window minimize clustering, and game launchers.
+
+![The Omarchy Linux Suite](public/screenshots/omarchy-suite-preview.png)
+
+#### Phone Toss Survival (Android 15)
+Real-time motion telemetry Android application measuring aerial toss impact forces in Gs using native `SensorManager` with local SQLite persistence and Google Play Games Services V2 synchronization.
+
+![Phone Toss Survival](public/screenshots/phonetoss-preview.png)
+
+---
+
 ## 🌐 Live Subdomain Ecosystem
 
 All primary web applications are active production nodes deployed as dedicated subdomains under `azterisk.net`:
@@ -55,6 +74,13 @@ All primary web applications are active production nodes deployed as dedicated s
 
 The directory also indexes offline systems, native desktop applications, compilers, and game engines:
 
+* **[Azterisk Hero Companion](https://github.com/Azteriisk/CloneHeroCompanion)** — Godot 4 rhythm game utility with Enchor discovery, Spotify PKCE import, MusicMap recommendations, and YARG decryption.
+* **[The Omarchy Linux Suite](https://github.com/Azteriisk/omarchy-boot-manager)** — Marketplace-verified Wayland/Hyprland desktop ecosystem (wallpaper engine, display manager, boot manager, window clustering).
+* **[Phone Toss Survival](https://github.com/Azteriisk/PhoneTossSurvival)** — Telemetry-driven Android 15 game measuring aerial toss forces in Gs using SensorManager and Play Games Services V2.
+* **[jdx/demand (Theme Editor)](https://github.com/jdx/demand/pull/146)** — Interactive terminal theme studio contribution upstream to jdx/demand in Rust.
+* **[BioCosmos](https://github.com/Azteriisk/biocosmos)** — Evolutionary biological simulation prototype in Rust on Vulkan / `wgpu`.
+* **[azterisk_render](https://github.com/Azteriisk/azterisk_render)** — Modular 2D/3D graphics engine written in Rust on Vulkan (`wgpu`).
+* **[CS2 Radar OBS](https://github.com/Azteriisk/cs2-radar-obs)** — Automated tool parsing CS2 Steam configs to project calibrated high-visibility radar in OBS.
 * **[World_Sim](https://github.com/Azteriisk/World_Sim)** — Multi-layer Earth system and geological planetary ecosystem simulator in Rust.
 * **[SpectralSubtractor](https://github.com/Azteriisk/SpectralSubtractor)** — Real-time DSP spectral subtraction noise reduction VST3 plugin in C++ / JUCE.
 * **[PseudoIDE](https://github.com/Azteriisk/PseudoIDE)** — Offline-first privacy AI pseudocode translation IDE in Rust and TypeScript.
@@ -100,10 +126,11 @@ azterisk/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18.x or later
-- npm or pnpm
 
-### Installation
+- Node.js 20+
+- npm or bun
+
+### Local Development
 
 ```bash
 # Clone the repository
@@ -113,24 +140,21 @@ cd azterisk
 # Install dependencies
 npm install
 
-# Run local development server with Turbopack
+# Start development server with Turbopack
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view the gateway.
 
-### Production Build
+### Building for Production
 
 ```bash
-# Compile optimized production bundle
 npm run build
-
-# Start production server
 npm run start
 ```
 
 ---
 
-## 📄 License
+## 📜 License
 
-MIT License © 2026 Alec ([Azteriisk](https://github.com/Azteriisk))
+MIT © [Azteriisk](https://github.com/Azteriisk)

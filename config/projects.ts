@@ -705,6 +705,89 @@ export const STANDALONE_PROJECTS: SubdomainProject[] = [
       { id: 'glfw', name: 'GLFW', category: 'framework', websiteUrl: 'https://www.glfw.org', color: '#10b981' },
     ],
   },
+  {
+    id: 'clone-hero-companion',
+    name: 'Azterisk Hero Companion',
+    githubUrl: 'https://github.com/Azteriisk/CloneHeroCompanion',
+    tagline: 'Godot 4 Chart Discovery, Spotify Importer & YARG Manager',
+    shortDescription:
+      'A modern companion app for Clone Hero and YARG — Enchor discovery, Spotify playlist imports, MusicMap similarity engine, and automated chart decryption.',
+    fullWriteup:
+      'Azterisk Hero Companion provides modern song discovery and library management for Clone Hero and Yet Another Rhythm Game (YARG) players. Built from scratch in Godot 4 (GDScript), the application features direct Enchor API integration for browsing community charts, an automated Spotify Playlist Importer utilizing PKCE OAuth and Levenshtein similarity scoring, dynamic graph-based artist recommendations via Music-Map scraping, multi-drive directory detection, and built-in Crawford cipher decryption for .yargsong packages.',
+    screenshotUrl: '/screenshots/clonehero-preview.png',
+    status: 'desktop',
+    statusLabel: 'Godot 4 / Desktop',
+    projectType: 'desktop',
+    isSubdomain: false,
+    technologies: [
+      { id: 'godot', name: 'Godot 4', category: 'engine', websiteUrl: 'https://godotengine.org', color: '#478cbf' },
+      { id: 'gdscript', name: 'GDScript', category: 'language', websiteUrl: 'https://docs.godotengine.org', color: '#355570' },
+      { id: 'spotify', name: 'Spotify API', category: 'auth', websiteUrl: 'https://developer.spotify.com', color: '#1db954' },
+      { id: 'enchor', name: 'Enchor.us', category: 'backend', websiteUrl: 'https://enchor.us', color: '#ff0055' },
+      { id: 'python', name: 'Python', category: 'tools', websiteUrl: 'https://www.python.org', color: '#3776ab' },
+      { id: 'indexeddb', name: 'SQLite', category: 'database', websiteUrl: 'https://www.sqlite.org', color: '#003b57' },
+    ],
+  },
+  {
+    id: 'omarchy-suite',
+    name: 'The Omarchy Linux Suite',
+    githubUrl: 'https://github.com/Azteriisk/omarchy-boot-manager',
+    tagline: 'Verified Hyprland & Wayland Desktop Ecosystem for Arch Linux',
+    shortDescription:
+      'A comprehensive ecosystem of marketplace-verified plugins, hardware managers, and desktop widgets built for Omarchy Linux and Hyprland.',
+    fullWriteup:
+      'The Omarchy Linux Suite delivers a cohesive desktop experience for Hyprland on Arch Linux. Officially listed on the Omarchy Plugin Marketplace, the suite includes: omarchy-boot-manager (Windows dual-boot chainloader with sbctl Secure Boot enrollment for kernel anti-cheat games), omarchy-display-manager (interactive drag-and-drop monitor positioning and per-monitor rotation GUI), omarchy-wallpaper-engine (native Steam Wallpaper Engine runner supporting OpenGL scene shaders, video, and PipeWire audio visualizers), omarchy-window-minimize (CSD window minimization hook and Quickshell drawer), omarchy-games (unified Steam, Lutris, and RetroArch library manager), and omarchy-indicators (modular top-bar status indicators and Stay Awake hub).',
+    screenshotUrl: '/screenshots/omarchy-suite-preview.png',
+    status: 'active',
+    statusLabel: 'Arch / Hyprland Suite',
+    projectType: 'systems',
+    isSubdomain: false,
+    technologies: [
+      { id: 'hyprland', name: 'Hyprland', category: 'graphics', websiteUrl: 'https://hyprland.org', color: '#00c8ff' },
+      { id: 'quickshell', name: 'Quickshell (QML)', category: 'framework', websiteUrl: 'https://quickshell.outfoxxed.me', color: '#fe8019' },
+      { id: 'linux', name: 'Arch Linux', category: 'infra', websiteUrl: 'https://archlinux.org', color: '#1793d1' },
+      { id: 'cpp', name: 'C++', category: 'language', websiteUrl: 'https://isocpp.org', color: '#00599c' },
+      { id: 'python', name: 'Python', category: 'tools', websiteUrl: 'https://www.python.org', color: '#3776ab' },
+    ],
+  },
+  {
+    id: 'phone-toss-survival',
+    name: 'Phone Toss Survival',
+    githubUrl: 'https://github.com/Azteriisk/PhoneTossSurvival',
+    tagline: 'Telemetry-Driven Android Game with Real-Time G-Force Physics',
+    shortDescription:
+      'An intense motion telemetry Android game measuring aerial toss impact forces in Gs using native SensorManager, with SQLite high scores and Play Games Services V2.',
+    fullWriteup:
+      'Phone Toss Survival is an Android application built for real-time motion telemetry on Android 15 (Target SDK 35). Utilizing the native SensorManager framework, the app measures continuous 3-axis accelerometer forces during aerial phone tosses, converts vector magnitudes to Earth G-forces (G = Magnitude / 9.80665), and triggers an automated 60-second post-impact survival verification protocol. High scores are persisted locally in SQLite and synchronized globally via Google Play Games Services V2, wrapped in an endless ViewPager2 carousel interface.',
+    screenshotUrl: '/screenshots/phonetoss-preview.png',
+    status: 'active',
+    statusLabel: 'Android 15 / Java',
+    projectType: 'game',
+    isSubdomain: false,
+    technologies: [
+      { id: 'android', name: 'Android SDK 35', category: 'framework', websiteUrl: 'https://developer.android.com', color: '#3ddc84' },
+      { id: 'java', name: 'Java 11', category: 'language', websiteUrl: 'https://www.oracle.com/java/', color: '#f89820' },
+      { id: 'indexeddb', name: 'SQLite', category: 'database', websiteUrl: 'https://www.sqlite.org', color: '#003b57' },
+    ],
+  },
+  {
+    id: 'jdx-demand-theme-editor',
+    name: 'jdx/demand (Theme Editor)',
+    githubUrl: 'https://github.com/jdx/demand/pull/146',
+    tagline: 'Interactive Terminal Theme Studio for Rust TUI Library',
+    shortDescription:
+      'Contributed an interactive, self-contained terminal theme editor example upstream to jdx/demand, supporting live previews, palette tuning, and custom theme persistence.',
+    fullWriteup:
+      'Contributed an interactive, full-featured theme editor upstream to jdx/demand (the popular Rust console prompt library inspired by Charm\'s huh?). Engineered a palette-first terminal workflow featuring real-time previewing of inputs, selects, multiselects, and dialogs, advanced field-level color customization, validation, and complete custom theme import/export persistence across ANSI color domains.',
+    status: 'active',
+    statusLabel: 'Rust / Upstream TUI',
+    projectType: 'cli',
+    isSubdomain: false,
+    technologies: [
+      { id: 'rust', name: 'Rust', category: 'language', websiteUrl: 'https://www.rust-lang.org', color: '#ea580c' },
+      { id: 'terminal', name: 'ANSI TUI', category: 'tools', websiteUrl: 'https://github.com/jdx/demand', color: '#4ade80' },
+    ],
+  },
 ];
 
 export const ALL_DIRECTORY_PROJECTS: SubdomainProject[] = [
