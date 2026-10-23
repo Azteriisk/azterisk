@@ -18,16 +18,16 @@ interface CelestialSpec {
   delay: number;
 }
 
-// Desktop coordinates and celestial size weights (rich visual differentiation)
+// Desktop coordinates and celestial size weights (binary-star orbital diamond layout)
 const DESKTOP_SPECS: Record<string, CelestialSpec> = {
   'makerspace':          { x: 50, y: 12, weight: 1.15, delay: 0 }, // Top apex hub anchor
-  'patent-flow':         { x: 18, y: 38, weight: 0.94, delay: 1 }, // Upper-left feature wing
-  'terminal-emulator':   { x: 50, y: 38, weight: 1.25, delay: 2 }, // Core interactive flagship (largest)
-  'career-report':       { x: 82, y: 38, weight: 0.98, delay: 3 }, // Upper-right feature wing
-  'sales-flow':          { x: 18, y: 64, weight: 0.74, delay: 5 }, // Lower-left compact satellite
-  'unknown-frequencies': { x: 50, y: 64, weight: 1.10, delay: 4 }, // Central audio-visual core
-  'shared-canvas':       { x: 82, y: 64, weight: 0.80, delay: 6 }, // Lower-right satellite
-  'quickswitch-ui':      { x: 50, y: 88, weight: 0.88, delay: 7 }, // Bottom apex anchor
+  'patent-flow':         { x: 17, y: 32, weight: 0.94, delay: 1 }, // Upper-left feature wing
+  'career-report':       { x: 83, y: 32, weight: 0.98, delay: 3 }, // Upper-right feature wing
+  'terminal-emulator':   { x: 37, y: 50, weight: 1.25, delay: 2 }, // Core interactive flagship (largest)
+  'unknown-frequencies': { x: 63, y: 50, weight: 1.12, delay: 4 }, // Central audio-visual core
+  'sales-flow':          { x: 17, y: 68, weight: 0.78, delay: 5 }, // Lower-left compact satellite
+  'shared-canvas':       { x: 83, y: 68, weight: 0.82, delay: 6 }, // Lower-right satellite
+  'quickswitch-ui':      { x: 50, y: 88, weight: 0.92, delay: 7 }, // Bottom apex anchor
 };
 
 // Mobile coordinates and celestial size weights (spacious 1-2-2-2-1 layout)
@@ -37,14 +37,15 @@ const MOBILE_SPECS: Record<string, CelestialSpec> = {
   'career-report':       { x: 77, y: 22.5, weight: 0.98, delay: 2 },
   'terminal-emulator':   { x: 23, y: 47.5, weight: 1.25, delay: 3 },
   'unknown-frequencies': { x: 77, y: 47.5, weight: 1.10, delay: 4 },
-  'sales-flow':          { x: 23, y: 72.5, weight: 0.74, delay: 5 },
-  'shared-canvas':       { x: 77, y: 72.5, weight: 0.80, delay: 6 },
-  'quickswitch-ui':      { x: 50, y: 88.0, weight: 0.88, delay: 7 },
+  'sales-flow':          { x: 23, y: 72.5, weight: 0.78, delay: 5 },
+  'shared-canvas':       { x: 77, y: 72.5, weight: 0.82, delay: 6 },
+  'quickswitch-ui':      { x: 50, y: 88.0, weight: 0.92, delay: 7 },
 };
 
 /**
  * Computes mathematically guaranteed collision-free node radii that dynamically
- * scale to fit any viewport dimensions without overlapping or clipping container bounds.
+ * scale to fit any viewport dimensions without overlapping or clipping container bounds,
+ * while enforcing a generous minimum floor so text never collides from within.
  */
 function computeDynamicCoordinates(
   specs: Record<string, CelestialSpec>,
@@ -53,7 +54,7 @@ function computeDynamicCoordinates(
   isMobile: boolean
 ): Record<string, { x: number; y: number; radius: number; delay: number }> {
   // Real-pixel safety gap buffer between adjacent circle edges (accommodates micro-sway)
-  const GAP = isMobile ? 10 : 14;
+  const GAP = isMobile ? 10 : 16;
   // Margin from outer stage boundaries
   const MARGIN = isMobile ? 8 : 12;
 
@@ -93,8 +94,8 @@ function computeDynamicCoordinates(
     }
   }
 
-  // Readable floor
-  const minBase = isMobile ? 24 : 28;
+  // Generous floor so labels and badges never touch the circle perimeter from within
+  const minBase = isMobile ? 32 : 46;
   const finalBase = Math.max(minBase, maxBase);
 
   const result: Record<string, { x: number; y: number; radius: number; delay: number }> = {};
@@ -168,9 +169,9 @@ function trimmedLine(
   const ux = dx / dist;
   const uy = dy / dist;
 
-  // Trim to visible outer ring (0.92 of node diameter)
-  const rFrom = from.radius * 0.92;
-  const rTo = to.radius * 0.92;
+  // Trim to visible outer ring (0.94 of node diameter)
+  const rFrom = from.radius * 0.94;
+  const rTo = to.radius * 0.94;
 
   const px1 = fx + ux * rFrom;
   const py1 = fy + uy * rFrom;

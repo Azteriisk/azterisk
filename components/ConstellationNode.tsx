@@ -111,12 +111,12 @@ export function ConstellationNode({
   const sway = getNodeSwayProfile(project.id, floatDelay);
 
   // Dynamic proportional typography & badges strictly tailored to radius
-  const pillTextSize = radius < 32 ? '7.5px' : radius < 44 ? '8.5px' : radius < 58 ? '9.5px' : '10.5px';
-  const dotSize = radius < 36 ? 3.5 : radius < 54 ? 4.5 : 5.5;
-  const titleTextSize = radius < 32 ? '8.5px' : radius < 44 ? '10px' : radius < 58 ? '11.5px' : '13px';
-  const titleLeading = radius < 44 ? 1.15 : 1.2;
-  const pillPadding = radius < 36 ? '1px 5px' : radius < 54 ? '1.5px 7px' : '2px 9px';
-  const pillMarginBottom = radius < 36 ? '1px' : radius < 54 ? '2px' : '3.5px';
+  const pillTextSize = radius < 38 ? '7.5px' : radius < 50 ? '8.5px' : radius < 64 ? '9.5px' : '10.5px';
+  const dotSize = radius < 40 ? 3.5 : radius < 56 ? 4.5 : 5.5;
+  const titleTextSize = radius < 38 ? '9px' : radius < 50 ? '10.5px' : radius < 64 ? '12px' : '13.5px';
+  const titleLeading = radius < 50 ? '1.14' : '1.18';
+  const pillPadding = radius < 40 ? '1px 5px' : radius < 56 ? '1.5px 7px' : '2px 9px';
+  const pillMarginBottom = radius < 40 ? '1px' : radius < 56 ? '2.5px' : '4px';
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -219,7 +219,7 @@ export function ConstellationNode({
             <motion.circle
               cx="100"
               cy="100"
-              r="92"
+              r="94"
               fill="rgba(10, 12, 24, 0.85)"
               initial={false}
               animate={{ fillOpacity: isActive ? 1 : 0 }}
@@ -230,7 +230,7 @@ export function ConstellationNode({
             <circle
               cx="100"
               cy="100"
-              r="92"
+              r="94"
               fill="none"
               stroke="rgba(148, 163, 184, 0.35)"
               strokeWidth="1.5"
@@ -240,7 +240,7 @@ export function ConstellationNode({
             <circle
               cx="100"
               cy="100"
-              r="84"
+              r="87"
               fill="none"
               stroke="rgba(148, 163, 184, 0.18)"
               strokeWidth="0.8"
@@ -251,7 +251,7 @@ export function ConstellationNode({
             <motion.circle
               cx="100"
               cy="100"
-              r="92"
+              r="94"
               fill="none"
               stroke="#ffffff"
               strokeWidth="2.5"
@@ -267,7 +267,7 @@ export function ConstellationNode({
             <motion.circle
               cx="100"
               cy="100"
-              r="84"
+              r="87"
               fill="none"
               stroke="#ffffff"
               strokeWidth="1"
