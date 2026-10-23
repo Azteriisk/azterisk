@@ -106,9 +106,17 @@ export function ConstellationNode({
   onLeave,
 }: ConstellationNodeProps) {
   const diameter = radius * 2;
-  const isMobile = radius <= 60;
-  const swayScale = isMobile ? 0.55 : 1.0;
+  const isMobile = radius <= 50;
+  const swayScale = Math.min(1.0, Math.max(0.4, radius / 70));
   const sway = getNodeSwayProfile(project.id, floatDelay);
+
+  // Dynamic proportional typography & badges strictly tailored to radius
+  const pillTextSize = radius < 32 ? '7.5px' : radius < 44 ? '8.5px' : radius < 58 ? '9.5px' : '10.5px';
+  const dotSize = radius < 36 ? 3.5 : radius < 54 ? 4.5 : 5.5;
+  const titleTextSize = radius < 32 ? '8.5px' : radius < 44 ? '10px' : radius < 58 ? '11.5px' : '13px';
+  const titleLeading = radius < 44 ? 1.15 : 1.2;
+  const pillPadding = radius < 36 ? '1px 5px' : radius < 54 ? '1.5px 7px' : '2px 9px';
+  const pillMarginBottom = radius < 36 ? '1px' : radius < 54 ? '2px' : '3.5px';
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -273,20 +281,36 @@ export function ConstellationNode({
           </svg>
 
           {/* Node Interior Content (pointer-events-none ensures unified cursor hit) */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center px-1.5 sm:px-3 max-w-[90%] pointer-events-none">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-1 max-w-[88%] pointer-events-none">
             {/* Subdomain Pill */}
-            <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1.5 px-1.5 sm:px-2.5 py-[1px] sm:py-0.5 rounded-full bg-white/5 sm:bg-white/10 border border-white/10 sm:border-white/20 shrink-0">
-              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="font-mono text-[8px] sm:text-[10.5px] font-medium tracking-wider text-slate-300 whitespace-nowrap">
+            <div
+              className="flex items-center gap-1 rounded-full bg-white/10 border border-white/20 shrink-0"
+              style={{
+                padding: pillPadding,
+                marginBottom: pillMarginBottom,
+              }}
+            >
+              <span
+                className="rounded-full bg-emerald-400 animate-pulse shrink-0"
+                style={{ width: dotSize, height: dotSize }}
+              />
+              <span
+                className="font-mono font-medium tracking-wider text-slate-300 whitespace-nowrap"
+                style={{ fontSize: pillTextSize }}
+              >
                 {(project.subdomain || project.id).split('.')[0]}.
               </span>
             </div>
 
             {/* Project Title */}
             <h3
-              className={`font-sans font-bold text-[10.5px] sm:text-xs md:text-sm leading-[1.18] tracking-wide text-white transition-all duration-200 line-clamp-2 ${
+              className={`font-sans font-bold tracking-wide text-white transition-all duration-200 line-clamp-2 ${
                 isActive ? 'glow-text text-white' : 'text-slate-100'
               }`}
+              style={{
+                fontSize: titleTextSize,
+                lineHeight: titleLeading,
+              }}
             >
               {project.name}
             </h3>

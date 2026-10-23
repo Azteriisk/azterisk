@@ -37,13 +37,13 @@ export default function Home() {
           filter: isFocused ? 'blur(2px)' : 'none',
         }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 pt-16 sm:pt-20 md:pt-14 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
+        className="relative z-10 pt-12 sm:pt-14 md:pt-12 pb-0 px-4 text-center pointer-events-none flex flex-col items-center shrink-0"
       >
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-1"
+          className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-0.5 sm:mb-1"
         >
           <Sparkles size={11} className="text-white animate-spin-slow" />
           <span className="text-[10px] font-mono tracking-widest text-slate-300 uppercase">
@@ -55,7 +55,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-xl sm:text-2xl md:text-4xl font-black tracking-tight text-white glow-text uppercase"
+          className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white glow-text uppercase"
         >
           azterisk.net
         </motion.h1>
@@ -71,7 +71,7 @@ export default function Home() {
       </motion.div>
 
       {/* Main Interactive Stage Area */}
-      <div className={`relative z-10 w-full px-2 sm:px-4 ${viewMode === 'list' ? 'flex-none' : 'flex-1 flex items-center justify-center overflow-visible'}`}>
+      <div className={`relative z-10 w-full px-2 sm:px-4 ${viewMode === 'list' ? 'flex-none' : 'flex-1 min-h-0 flex items-center justify-center overflow-visible'}`}>
         <AnimatePresence mode="wait">
           {viewMode === 'constellation' ? (
             <motion.div
